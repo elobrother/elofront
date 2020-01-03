@@ -1,0 +1,92 @@
+<template>
+    <div>
+        <Detail :status=status />
+
+        <div class="row">
+            <div class="col">
+                <h3 class="text-center text-information">Pedidos</h3>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <span class="form-inline my-2 my-lg-0" v-if="orders.length!=0">
+                    <input class="form-control mr-sm-2" type="text" id="calendario" v-model="element">
+                    <button class="btn btn-success my-2 my-sm-0" @click="search()">Buscar por N* ordem</button>
+                </span>
+                <div  v-if="orders.length!=0" style="height:400px;width:auto;display:block; overflow-y:auto" class="mt-5">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Código</th>
+                                <th scope="col">Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody v-if="!load" >
+                            <tr class="table-active" v-for="(order,index) in orders" :key="index">
+                                <th scope="row">{{order.tipo}}</th>
+                                <td>R$ {{order.valor}}</td>
+                                <td>{{order.code}}</td>
+                                <td><button class="btn btn-primary" data-toggle="modal" data-target="#detalhe" @click="seeProduct(order._id)">Detalhes</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div v-if="orders.length==0">
+                    <p class="text-center">Você ainda não pegou um serviço</p>
+                </div>
+                <!-- <div>
+                    <button class="btn btn-primary" @click="more()"></button>
+                </div>  -->
+                <!-- <div class="d-flex justify-content-center">
+                    <div v-if="load" class="spinner-border text-success" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<script>
+import Detail from '../../Modal/modal-product.vue'; 
+
+export default {
+    data(){
+        return{
+            status:true,
+            load:false,
+            total:null,
+            element:'',
+        }
+    },
+    components:{
+        Detail
+    },
+    computed:{
+        orders(){
+            this.load=false
+            this.total=this.$store.getters['getOrders']
+            console.log(this.total)
+            return this.$store.getters['getOrders']
+        }
+    },
+    methods: {
+        search(){
+            this.$store.commit('searchProductMutation',this.element)
+        },
+        seeProduct(id){
+            this.$store.commit('orderMutation',id)
+        }
+    },
+    created(){
+        this.$store.dispatch('getAllOrdersPannel')
+    },
+    destroyed(){
+        this.$store.commit('changeSeachMutation')
+    }
+}
+</script>

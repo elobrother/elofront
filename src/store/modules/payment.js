@@ -1,0 +1,428 @@
+/* eslint-disable */
+import Vue from 'vue';
+import router from '../../routes';
+
+const payment={
+    state:{
+        payment:false,
+        formData:{
+            tipo:'',
+            value:'',
+            description:'',
+            days:''
+        },
+        order:{},
+        orders:{},
+        orders_copy:{},
+        orders_copy_price:{},
+        games:{},
+        games_copy:{},
+        products:{},
+        products_copy:{},
+        product:{},
+        cupoms:{},
+        dropout:{},
+        dropout_copy:{},
+        isSearch:false,
+        eloboost:{
+            value:'',
+            days:''
+        },
+        mercadoPagoId:''
+    },
+    getters:{
+        getAccess(state){
+            return state.payment
+        },
+        getProduct(state){
+            return state.formData
+        },
+        getOneOrder(state){
+            return state.order
+        },
+        getOrders(state){
+            if(state.isSearch){
+                return state.orders_copy
+            }else{
+                return state.orders
+            }
+        },
+        getOrdersPrice(state){
+            if(state.isSearch){
+                return state.orders_copy_price
+            }else{
+                return state.orders
+            }
+        },
+        getGames(state){
+            if(state.isSearch){
+                return state.games_copy
+            }else{
+                return state.games
+            }
+        },
+        getProducts(state){
+            if(state.isSearch){
+                return state.products_copy
+            }else{
+                return state.products
+            }
+        },  
+        getOneProduct(state){
+            return state.product
+        },  
+        getCupoms(state){
+            return state.cupoms
+        },
+        getDropout(state){
+            if(state.isSearch){
+                return state.dropout_copy
+            }else{
+                return state.dropout
+            }
+        },
+        getEloBoost(state){
+            return state.eloboost
+        },
+        getMercadoPagoId(state){
+            return state.mercadoPagoId
+        }
+    },
+    mutations:{
+        accessMutation(state,data){
+            state.payment=data
+        },
+        confirmOrderMutation(state,data){
+            state.formData.tipo=data.tipo
+            state.formData.value=data.value
+            state.formData.description=data.description
+            state.formData.days=data.days
+            router.push('/pagamento')
+        },
+        ordersMutation(state,data){
+            state.orders=data
+        },
+        orderMutation(state,data){
+            state.order=state.orders.filter(e=>{return e._id==data})
+        },
+        gamesMutation(state,data){
+            state.games=data
+        },
+        productsMutation(state,data){
+            state.products=data
+        },
+        productMutation(state,data){
+            state.product=state.products.filter(e=>{return e._id==data})
+        },
+        cupomValidMutation(state,data){
+            state.formData.valor=((parseFloat(state.formData.valor))*(1-(data/100))).toFixed(2)
+        },
+        allCupomMutation(state,data){
+            state.cupoms=data
+        },
+        addCupomMutation(state,data){
+            state.cupoms.push(data)
+        },
+        redirectMutation(){
+            router.push('/sucesso')
+        },
+        updateOrders(state,data){
+            state.isSearch=false
+            state.orders=data
+        },
+        searchProductMutation(state,data){
+            if(data!=''){
+                state.isSearch=true
+                state.orders_copy=state.orders.filter(e=>{return e.tipo==data})
+                if(state.orders_copy.length==0){
+                   state.orders_copy=state.orders
+                }
+            }
+        },
+        changeSeachMutation(state){
+            state.isSearch=false
+        },
+        searchStatusMutation(state,data){
+            if(data!=''){
+                state.isSearch=true
+                if(data=='ELOBOOST' || data=='ELOCOACH'){
+                    state.products_copy=state.products.filter(e=>{return e.tipo==data})
+                }else{
+                    state.products_copy=state.products.filter(e=>{return e.status==data.toUpperCase()})
+                }
+                if(state.products_copy.length==0){
+                    state.products_copy=state.products
+                }
+            }
+        },
+        searchMyGamesMutation(state,data){
+            if(data!=''){
+                state.isSearch=true
+                state.games_copy=state.games.filter(e=>{return e.status==data.toUpperCase()})
+                if(state.games_copy.length==0){
+                    state.games_copy=state.games
+                }
+            }
+        },
+        searchPriceMutation(state,data){
+            state.isSearch=true
+            if(data=='barato'){
+                const list=[]
+                list.push(state.orders.filter(e=>{ return parseFloat(e.valor) }))
+                state.orders_copy_price=list.sort(function(a,b){return a-b})
+            }
+            else if(data=='caro'){
+                const list=[]
+                list.push(state.orders.filter(e=>{ return parseFloat(e.valor) }))
+                state.orders_copy_price=list.sort(function(a,b){return b-a})
+            }
+            state.orders_copy_price=state.orders.filter(e=>{return e.valor==data})
+        },
+        showDropMutation(state,data){
+            state.dropout=data
+        },
+        updateList(state,data){
+            state.dropout=state.dropout.filter(e=>{return e._id!=data})
+        },
+        updateCupom(state,data){
+            state.cupoms=state.cupoms.filter(e=>{return e._id!=data})
+        },
+        // updateOrdeMutation(state,data){
+        //     state.products=state.products.filter(e=>{return e._id!=data})
+        // },
+        dropoutsMutation(state,data){
+            if(data!=''){
+                state.isSearch=true
+                state.dropout_copy=state.dropout.filter(e=>{return e.user.name==data})
+            }else{
+                state.isSearch=false
+            }
+        },
+        eloboostMutation(state,data){
+            state.eloboost.value=data.value
+            state.eloboost.days=data.days
+        },
+        redirectPaymentMutation(){
+            router.push('/dashboard')
+        },
+        mercadoPagoIdMutation(state,data){
+            state.mercadoPagoId=data
+        }
+    },
+    actions:{
+        //payment
+        async callPaypal({commit},payload){
+            const token=localStorage.getItem('token')
+            let id=''
+            await Vue.http.post('api/order/create',{...payload},{headers:{Authorization: token}})
+            .then(response=>{
+                id=response.body.order._id              
+            }).catch()  
+
+            const order=Object.assign(payload,{id:id})
+            await Vue.http.post('api/paypal/buy',{order},{headers:{Authorization: token}})
+            .then(response=>{
+                console.log(response.body)
+                window.location.href=response.body
+                // window.open(response.body, "_target");
+            }).catch()
+            
+        },
+        async endPayPal({commit},payload){
+            const token=localStorage.getItem('token')
+            await Vue.http.post(`api/paypal/success`,{...payload},{headers:{Authorization: token}})
+            .then(response=>{
+                console.log(response.body)
+                commit('redirectPaymentMutation')
+            }).catch()
+        },
+        async callMercadoPago({commit},payload){
+            const token=localStorage.getItem('token')
+            let id=''
+            await Vue.http.post('api/order/create',{...payload},{headers:{Authorization: token}})
+            .then(response=>{
+                id=response.body.order._id
+                localStorage.setItem('qweklwq',id)
+            }).catch()
+
+            const email=localStorage.getItem('email')
+            const name=email.split('@')[0]
+            const order=Object.assign(payload,{id:id,userName:name,userEmail:email})
+            console.log({order:order})
+            await Vue.http.post('api/mercadopago/',{order:order},{headers:{Authorization: token}})
+            .then(response=>{
+                console.log(response.body)
+                window.location.href=response.body
+                // window.open(response.body, "_target");
+            }).catch()
+        },
+        async endMercadoPago({commit},payload){
+            const token=localStorage.getItem('token')
+            const id=localStorage.getItem('qweklwq')
+            const data={'collection_id':payload,'OrderId':id}
+            console.log(data)
+            await Vue.http.post('api/mercadopago/success',{data},{headers:{Authorization: token}})
+            .then(response=>{
+                console.log(response.body)
+                localStorage.removeItem('qweklwq')
+                commit('redirectPaymentMutation')
+            }).catch()
+        },
+        //all users and Orders
+        getAllOrdersPannel({commit}){
+            const token=localStorage.getItem('token')
+            Vue.http.get('api/order/',{headers:{Authorization: token}})
+            .then(response=>{
+                commit('ordersMutation',response.body)
+            }).catch(err=>{Vue.noty.error('Ocorreu um erro ao buscar os dados!')})
+        },
+        getAllOrders({commit}){
+            const token=localStorage.getItem('token')
+            Vue.http.get('api/order/',{headers:{Authorization: token}})
+            .then(response=>{
+                const all=response.body.filter(e=>{return e.userPlayer==null})
+                console.log('todos os pedidos')
+                console.log(all)
+                commit('ordersMutation',all)
+            }).catch(err=>{Vue.noty.error('Ocorreu um erro ao buscar os dados!')})
+        },
+        //return results
+        myGames({commit}){
+            const token=localStorage.getItem('token')
+            const userId=localStorage.getItem('id')
+            Vue.http.get(`api/order/${userId}`,{headers:{Authorization: token}})
+            .then(response=>{
+                console.log('jogador')
+                commit('gamesMutation',response.body)
+            }).catch()
+        },
+        myProducts({commit}){
+            const token=localStorage.getItem('token')
+            const userId=localStorage.getItem('id')
+            Vue.http.get(`api/order/${userId}`,{headers:{Authorization: token}})
+            .then(response=>{
+                console.log('usuario')
+                console.log(response.body)
+                commit('productsMutation',response.body)
+            }).catch()
+        },
+        //cupom
+        useCupom({commit},payload){
+            const name=payload
+            Vue.http.get(`api/cupom/${name}`)
+            .then(response=>{
+                console.log(response.body.cupom)
+                console.log(response.body.cupom[0].value)
+                commit('cupomValidMutation',response.body.cupom)
+            }).catch()
+        },
+        createCupom({commit},payload){
+            const token=localStorage.getItem('token')
+            Vue.http.post('api/cupom/',{...payload},{headers:{Authorization: token}})
+            .then(response=>{
+                Vue.noty.success('Cupom criado com sucesso!')
+                console.log(response.body)
+                commit('addCupomMutation',response.body[0])
+            }).catch(err)
+        },
+        allCupoms({commit}){
+            const token=localStorage.getItem('token')
+            Vue.http.get('api/cupom/',{headers:{Authorization: token}})
+            .then(response=>{
+                console.log(response.body)
+                commit('allCupomMutation',response.body)
+            }).catch()
+        },
+        removeCupom({commit},payload){
+            const token=localStorage.getItem('token')
+            Vue.http.delete(`api/cupom/${payload}`,{headers:{Authorization: token}})
+            .then(response=>{
+                Vue.noty.success(response.body)
+                commit('updateCupom',payload)
+                this.allCupoms()
+                // commit('cupomMutation',response.body)
+            }).catch()
+        },
+        //Job
+        selectJob({commit},payload){
+            const token=localStorage.getItem('token')
+            console.log(payload)
+            const id=payload
+            const userPlayer=localStorage.getItem('id')
+            const pedido={userPlayer:userPlayer}
+            Vue.http.put(`api/order/updateUser/${id}`,{pedido:pedido},{headers:{Authorization: token}})
+            .then(response=>{
+                // this.getAllOrders()
+            }).catch()
+        },
+        updateStatus({commit},payload){
+            const token=localStorage.getItem('token')
+            console.log(payload)
+            const id=payload.id
+            console.log(id)
+            const pedido={status:payload.status}
+            Vue.http.put(`api/order/updateStatus/${id}`,{pedido:pedido},{headers:{Authorization: token}})
+            .then(response=>{
+                Vue.noty.success('Status do pedido foi atualizado')
+            }).catch()
+        },
+        dropoutOrder({commit},payload){
+            const token=localStorage.getItem('token')
+            console.log(payload)
+            Vue.http.post(`api/order/dropouts/${payload.id}`,{...payload},{headers:{Authorization: token}})
+            .then(response=>{
+                Vue.noty.success('Serviço removido da sua lista!')
+                commit('updateList',payload.productId)
+            }).catch()
+        },
+        getAllDropout({commit}){
+            const token=localStorage.getItem('token')
+            console.log('chega aqui?')
+            Vue.http.get('api/order/dropouts/getAll',{headers:{Authorization: token}})
+            .then(response=>{
+                console.log('===============')
+                console.log(response.body)
+                console.log('--------------')
+                commit('showDropMutation',response.body)
+            }).catch()
+        },
+        //get elo
+        async sendElo({commit},payload){
+            const token=localStorage.getItem('token')
+            await Vue.http.post('api/elos/md10/getValue',payload,{headers:{Authorization: token}})
+            .then(response=>{
+                console.log(response.body)
+                commit('eloboostMutation',response.body)
+            }).catch(err=>console.log(err))
+        },
+        //cancelOrder
+        cancelOrder({commit},payload){
+            Vue.http.post('api/order/user/cancelOrder',{...payload})
+            .then(response=>{
+                // commit('updateOrdeMutation',payload.id)
+                Vue.noty.success(response.body.message)
+            })
+            .catch()
+        },
+        goRefund({commit},payload){
+            const token=localStorage.getItem('token')
+            const orderId=payload
+            Vue.http.post('api/order/refund',{orderId},{headers:{Authorization: token}})
+            .then(response=>{
+                if(response.status==200){
+                    Vue.noty.success(response.body.message)
+                }
+            }).catch()
+        },
+        requestUserData({commit},payload){
+            const token=localStorage.getItem('token')
+            Vue.http.post('api/order/',{payload},{headers:{Authorization: token}})
+            .then(response=>{
+
+            })
+        }
+        
+    }
+}
+
+export default payment;

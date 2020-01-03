@@ -1,0 +1,70 @@
+
+.topo{
+    margin-top:100px;
+}
+
+.button-confirm{
+    height:70px;
+    font-size: 20px;
+    border-radius: 35px;
+}
+
+.button-validate{
+    font-size: 20px;
+    border-radius: 35px;
+}
+
+.button-choice{
+    height: 70px;
+    font-size: 20px;
+}
+
+.text-black{
+    color:#000 !important;
+}
+.bronze-color{
+    /* background:#cd7f32; */
+    background:#DB9370;
+}
+.platinum-color{
+    background:#e5e4e2;
+}
+.diamond-color{
+    background:#34526f;
+}
+
+.text-payment{
+    font-size: 22px;
+    font-family: 'Cabin', sans-serif;
+    font-weight: 700;
+    color:#158cba;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.intense{
+    font-weight: bold;
+}
+
+.color-value{
+    color: #23a127;
+}
+
+.image-size{
+    margin-top: -45px;
+    height: 50%;
+    width: 180px;
+}
+
+.no-border{
+    border:none !important
+}
+
+.select-custom{
+    border-radius: 25px;
+    border: 2px solid #ccc;
+    font-size: 20px;
+    font-weight: 600;
+    /* background: #999; */
+    /* color:#fff */
+}
