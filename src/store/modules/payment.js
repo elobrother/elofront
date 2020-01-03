@@ -323,8 +323,9 @@ const payment={
         },
         //cupom
         async useCupom({commit},payload){
+            const token=localStorage.getItem('token')
             const name=payload
-            await Vue.http.get(`api/cupom/${name}`)
+            await Vue.http.get(`api/cupom/${name}`,{headers:{Authorization:token}})
             .then(response=>{
                 console.log(response.body.cupom)
                 console.log(response.body.cupom[0].value)
