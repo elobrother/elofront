@@ -93,7 +93,6 @@ export default {
     },
     methods: {
         detail(id){
-            console.log(id)
             this.$store.commit('productMutation',id)
         },
         search(){

@@ -402,9 +402,17 @@ const payment={
             }).catch()
         },
         //get elo
-        async sendElo({commit},payload){
+        async sendEloMd10({commit},payload){
             const token=localStorage.getItem('token')
             await Vue.http.post('api/elos/md10/getValue',payload,{headers:{Authorization: token}})
+            .then(response=>{
+                console.log(response.body)
+                commit('eloboostMutation',response.body)
+            }).catch(err=>console.log(err))
+        },
+        async sendEloBoost({commit},payload){
+            const token=localStorage.getItem('token')
+            await Vue.http.post('api/elos/',payload,{headers:{Authorization: token}})
             .then(response=>{
                 console.log(response.body)
                 commit('eloboostMutation',response.body)

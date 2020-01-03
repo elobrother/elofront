@@ -20,7 +20,11 @@
                         <thead>
                             <tr>
                                 <th scope="col">
-                                    Tipo
+                                    <select v-if="products.length!=0" class="custom-select" v-model="tipo" @click="searchType()">
+                                        <option value="Tipo">Tipo</option>
+                                        <option key="ELOBOOST">ELOBOOST</option>
+                                        <option key="ELOCOACH">ELOCOACH</option>
+                                    </select>
                                 </th>
                                 <th scope="col">Data de publicação</th>
                                 <th scope="col">Dias</th>
@@ -89,6 +93,9 @@ export default {
         },
         search(){
             this.$store.commit('searchPriceMutation',this.valor)
+        },
+        searchType(){
+            this.$store.commit('searchStatusMutation',this.tipo)
         }
     },
     created(){

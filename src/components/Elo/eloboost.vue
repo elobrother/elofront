@@ -167,7 +167,7 @@ export default {
                 this.selectPosAtual='Selecione',
                 this.button=false 
                 const data={currentElo:this.currentElo,requiredElo:this.requiredElo}
-                this.$store.dispatch('sendElo',data)
+                this.$store.dispatch('sendEloBoost',data)
                 this.show=true
             }else{
                 this.$noty.warning('O ELO desejado deve ser maior que o atual')

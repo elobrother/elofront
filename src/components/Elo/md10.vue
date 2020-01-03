@@ -123,7 +123,7 @@ export default {
     methods:{
         select(){
             const data={eloName:this.formData.description,match:`${this.sliderValue}`}
-            this.$store.dispatch('sendElo',data)
+            this.$store.dispatch('sendEloMd10',data)
             this.show=true
         },
         confirm(){
