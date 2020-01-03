@@ -329,7 +329,7 @@ const payment={
             .then(response=>{
                 console.log(response.body.cupom)
                 console.log(response.body.cupom[0].value)
-                commit('cupomValidMutation',response.body.cupom)
+                commit('cupomValidMutation',response.body.cupom[0].cupom)
             }).catch()
         },
         async createCupom({commit},payload){
