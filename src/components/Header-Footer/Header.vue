@@ -156,6 +156,7 @@ export default {
             const typeUser = localStorage.getItem("mdfkwe_r");
             if (typeUser != "JOGADOR") {
                 console.log(typeUser)
+                this.$store.commit('deslogadoMutation')
                 this.$store.commit("changeStatusMutation", this.goto);
             }
         },

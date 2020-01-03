@@ -69,7 +69,7 @@
             }
         },
         created() {
-            this.$store.commit("changeStatusMutation",this.goto) 
+            // this.$store.commit("changeStatusMutation",this.goto) 
         }
     }
 </script>

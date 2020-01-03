@@ -249,6 +249,7 @@ export default {
     },
     destroyed(){
         this.$store.commit("changeStatusFooter",true)
+        this.$store.commit('deslogadoMutation')
         this.formData={tipo:'ELOCOACH',value:'0.00',description:'',days:'1'}
     }
 }

@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="col-8">
                                     <strong>E-MAIL</strong>
-                                    <p>MEU@MAIL.COM</p>
+                                    <p>financeiroelobrother@gmail.com</p>
                                 </div>
                             </div>
                         </div>

@@ -284,16 +284,16 @@ const payment={
             }).catch()
         },
         //all users and Orders
-        getAllOrdersPannel({commit}){
+        async getAllOrdersPannel({commit}){
             const token=localStorage.getItem('token')
-            Vue.http.get('api/order/',{headers:{Authorization: token}})
+            await Vue.http.get('api/order/',{headers:{Authorization: token}})
             .then(response=>{
                 commit('ordersMutation',response.body)
             }).catch(err=>{Vue.noty.error('Ocorreu um erro ao buscar os dados!')})
         },
-        getAllOrders({commit}){
+        async getAllOrders({commit}){
             const token=localStorage.getItem('token')
-            Vue.http.get('api/order/',{headers:{Authorization: token}})
+            await Vue.http.get('api/order/',{headers:{Authorization: token}})
             .then(response=>{
                 const all=response.body.filter(e=>{return e.userPlayer==null})
                 console.log('todos os pedidos')
@@ -302,19 +302,19 @@ const payment={
             }).catch(err=>{Vue.noty.error('Ocorreu um erro ao buscar os dados!')})
         },
         //return results
-        myGames({commit}){
+        async myGames({commit}){
             const token=localStorage.getItem('token')
             const userId=localStorage.getItem('id')
-            Vue.http.get(`api/order/${userId}`,{headers:{Authorization: token}})
+            await Vue.http.get(`api/order/${userId}`,{headers:{Authorization: token}})
             .then(response=>{
                 console.log('jogador')
                 commit('gamesMutation',response.body)
             }).catch()
         },
-        myProducts({commit}){
+        async myProducts({commit}){
             const token=localStorage.getItem('token')
             const userId=localStorage.getItem('id')
-            Vue.http.get(`api/order/${userId}`,{headers:{Authorization: token}})
+            await Vue.http.get(`api/order/${userId}`,{headers:{Authorization: token}})
             .then(response=>{
                 console.log('usuario')
                 console.log(response.body)
@@ -322,35 +322,35 @@ const payment={
             }).catch()
         },
         //cupom
-        useCupom({commit},payload){
+        async useCupom({commit},payload){
             const name=payload
-            Vue.http.get(`api/cupom/${name}`)
+            await Vue.http.get(`api/cupom/${name}`)
             .then(response=>{
                 console.log(response.body.cupom)
                 console.log(response.body.cupom[0].value)
                 commit('cupomValidMutation',response.body.cupom)
             }).catch()
         },
-        createCupom({commit},payload){
+        async createCupom({commit},payload){
             const token=localStorage.getItem('token')
-            Vue.http.post('api/cupom/',{...payload},{headers:{Authorization: token}})
+            await Vue.http.post('api/cupom/',{...payload},{headers:{Authorization: token}})
             .then(response=>{
                 Vue.noty.success('Cupom criado com sucesso!')
-                console.log(response.body)
-                commit('addCupomMutation',response.body[0])
-            }).catch(err)
+                console.log(response.body.cupom)
+                commit('addCupomMutation',response.body.cupom)
+            }).catch(err=>console.log(err))
         },
-        allCupoms({commit}){
+        async allCupoms({commit}){
             const token=localStorage.getItem('token')
-            Vue.http.get('api/cupom/',{headers:{Authorization: token}})
+            await Vue.http.get('api/cupom/',{headers:{Authorization: token}})
             .then(response=>{
                 console.log(response.body)
                 commit('allCupomMutation',response.body)
             }).catch()
         },
-        removeCupom({commit},payload){
+        async removeCupom({commit},payload){
             const token=localStorage.getItem('token')
-            Vue.http.delete(`api/cupom/${payload}`,{headers:{Authorization: token}})
+            await Vue.http.delete(`api/cupom/${payload}`,{headers:{Authorization: token}})
             .then(response=>{
                 Vue.noty.success(response.body)
                 commit('updateCupom',payload)
@@ -359,41 +359,41 @@ const payment={
             }).catch()
         },
         //Job
-        selectJob({commit},payload){
+        async selectJob({commit},payload){
             const token=localStorage.getItem('token')
             console.log(payload)
             const id=payload
             const userPlayer=localStorage.getItem('id')
             const pedido={userPlayer:userPlayer}
-            Vue.http.put(`api/order/updateUser/${id}`,{pedido:pedido},{headers:{Authorization: token}})
+            await Vue.http.put(`api/order/updateUser/${id}`,{pedido:pedido},{headers:{Authorization: token}})
             .then(response=>{
                 // this.getAllOrders()
             }).catch()
         },
-        updateStatus({commit},payload){
+        async updateStatus({commit},payload){
             const token=localStorage.getItem('token')
             console.log(payload)
             const id=payload.id
             console.log(id)
             const pedido={status:payload.status}
-            Vue.http.put(`api/order/updateStatus/${id}`,{pedido:pedido},{headers:{Authorization: token}})
+            await Vue.http.put(`api/order/updateStatus/${id}`,{pedido:pedido},{headers:{Authorization: token}})
             .then(response=>{
                 Vue.noty.success('Status do pedido foi atualizado')
             }).catch()
         },
-        dropoutOrder({commit},payload){
+        async dropoutOrder({commit},payload){
             const token=localStorage.getItem('token')
             console.log(payload)
-            Vue.http.post(`api/order/dropouts/${payload.id}`,{...payload},{headers:{Authorization: token}})
+            await Vue.http.post(`api/order/dropouts/${payload.id}`,{...payload},{headers:{Authorization: token}})
             .then(response=>{
                 Vue.noty.success('Serviço removido da sua lista!')
                 commit('updateList',payload.productId)
             }).catch()
         },
-        getAllDropout({commit}){
+        async getAllDropout({commit}){
             const token=localStorage.getItem('token')
             console.log('chega aqui?')
-            Vue.http.get('api/order/dropouts/getAll',{headers:{Authorization: token}})
+            await Vue.http.get('api/order/dropouts/getAll',{headers:{Authorization: token}})
             .then(response=>{
                 console.log('===============')
                 console.log(response.body)
@@ -403,8 +403,9 @@ const payment={
         },
         //get elo
         async sendEloMd10({commit},payload){
+            console.log(payload)
             const token=localStorage.getItem('token')
-            await Vue.http.post('api/elos/md10/getValue',payload,{headers:{Authorization: token}})
+            await Vue.http.post('api/elos/md10/getValue',payload)
             .then(response=>{
                 console.log(response.body)
                 commit('eloboostMutation',response.body)
@@ -412,34 +413,34 @@ const payment={
         },
         async sendEloBoost({commit},payload){
             const token=localStorage.getItem('token')
-            await Vue.http.post('api/elos/',payload,{headers:{Authorization: token}})
+            await Vue.http.post('api/elos/',payload)
             .then(response=>{
                 console.log(response.body)
                 commit('eloboostMutation',response.body)
             }).catch(err=>console.log(err))
         },
         //cancelOrder
-        cancelOrder({commit},payload){
-            Vue.http.post('api/order/user/cancelOrder',{...payload})
+        async cancelOrder({commit},payload){
+            await Vue.http.post('api/order/user/cancelOrder',{...payload})
             .then(response=>{
                 // commit('updateOrdeMutation',payload.id)
                 Vue.noty.success(response.body.message)
             })
             .catch()
         },
-        goRefund({commit},payload){
+        async goRefund({commit},payload){
             const token=localStorage.getItem('token')
             const orderId=payload
-            Vue.http.post('api/order/refund',{orderId},{headers:{Authorization: token}})
+            await Vue.http.post('api/order/refund',{orderId},{headers:{Authorization: token}})
             .then(response=>{
                 if(response.status==200){
                     Vue.noty.success(response.body.message)
                 }
             }).catch()
         },
-        requestUserDataMutation({commit},payload){
+        async requestUserDataMutation({commit},payload){
             const token=localStorage.getItem('token')
-            Vue.http.post('api/order/getPlayer/Password',{orderId:payload},{headers:{Authorization: token}})
+            await Vue.http.post('api/order/getPlayer/Password',{orderId:payload},{headers:{Authorization: token}})
             .then(response=>{
                 commit('playerPassword',response.body)
             })

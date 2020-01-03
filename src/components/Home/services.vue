@@ -65,6 +65,7 @@
         },
         methods:{
             page(element){
+                this.$store.commit('logadoMutation')
                 // this.$store.commit('goToElosPageMutation',element)  
                 router.push(`/${element}`)
             }

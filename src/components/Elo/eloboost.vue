@@ -160,6 +160,8 @@ export default {
         },
         confirm(){
             if(this.numAtual<this.numDesejado){
+                this.numAtual=1
+                this.numDesejado=1
                 this.formData.description=this.order 
                 this.selectNameDesejado='Ferro',
                 this.selectPosDesejado='Selecione',
@@ -180,6 +182,7 @@ export default {
         this.numAtual=this.numDesejado=1
         this.fim=this.inicio='FerroIV',
         this.formData={value:'',tipo:'ELOBOOST',description:'',days:''}
+        this.$store.commit('deslogadoMutation')
         this.$store.commit("changeStatusFooter",true)
     }
 }

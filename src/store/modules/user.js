@@ -15,6 +15,7 @@ const user={
         },
         hash:false,
         logado:false,
+        status:false
     },
     getters:{
         getUser(state){

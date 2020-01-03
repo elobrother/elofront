@@ -47,6 +47,12 @@ const config={
         elocoachMutation(state,data){
             state.elocoach=data.filter(e=>{return e.type=='elocoach'})
             console.log(state.elocoach)
+        },
+        logadoMutation(state){
+            state.elo=true
+        },
+        deslogadoMutation(state){
+            state.elo=false
         }
     },
     actions:{

@@ -20,8 +20,6 @@
                         <h4><span class="color-modal">Senha no Lol: </span> <span class="text-modal-detail">{{product.playerPassword}}</span></h4>
                         <h4><span class="color-modal">Valor: </span> <span class="text-modal-detail">R$ {{product.valor}}</span></h4>
                         <h4><span class="color-modal">Descrição: </span> <span class="text-modal-detail">{{product.description}}</span></h4>
-                        <!-- <input type="hidden" v-model="getUser(product.userClient)"></p>
-                        <p class="text-modal-detail">{{getUser(product.userClient)}}</p> -->
                       </div>
                     </div> 
                   </div>
@@ -71,12 +69,12 @@ export default {
         if(localStorage.getItem('mdfkwe_r')=='CLIENTE'){
           this.cliente=true;
           let order= this.$store.getters['getOneProduct']
-          return order[0]
+          return order[0] || ''
         }
         if(localStorage.getItem('mdfkwe_r')=='ADMIN'){
           this.admin=true;
           let order= this.$store.getters['getOneOrder']
-          return order[0]
+          return order[0] || ''
         }
       },
     },

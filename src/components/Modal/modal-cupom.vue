@@ -62,7 +62,7 @@ export default {
                 amount:''
             },
             format:'dd/MM/yyyy',
-            today:moment().format('DD'),
+            today:new Date(),
             day:null
         }
     },
@@ -71,16 +71,15 @@ export default {
     },
     methods:{
         create(){
-            this.formData.expirationTime=moment(this.formData.expirationTime).format('DD/MM/YYYY')
-            this.day=this.formData.expirationTime.split('/')[0]
+            this.day=moment(this.formData.expirationTime).format('YYYY/MM/DD')
             if(this.formData.name==''&&this.formData.value==''&&
             this.formData.expirationTime=='Invalid date'&&this.formData.amount==''){
                 this.$noty.error('Preencha todos os campos!')
             }else{
-                if(!moment(this.today).isAfter(this.day)){
+                if(moment(this.today).isAfter(this.day)){
                     this.$noty.warning('O dia escolhido já passou!')
                 }else{
-                    this.$noty.success('Ta valendo')
+                    console.log(this.day+' '+this.today)
                     this.$store.dispatch('createCupom',this.formData)
                 }
             }

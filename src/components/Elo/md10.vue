@@ -20,7 +20,7 @@
                             <div class="row justify-content-center mb-5">
                                 <div class="col-8">
                                     <select class="custom-select select-custom" v-model="formData.description">
-                                        <option key="UNRANKEDMD10">UNRANKED</option>
+                                        <option value="UNRANKEDMD10">UNRANKED</option>
                                         <option value="FERROMD10">FERRO</option>
                                         <option value="BRONZEMD10">BRONZE</option>
                                         <option value="PRATAMD10">PRATA</option>
@@ -134,6 +134,7 @@ export default {
     },
     destroyed(){
         this.formData={value:'',tipo:'MD10',description:'',days:''}
+        this.$store.commit('deslogadoMutation')
         this.$store.commit("changeStatusFooter",true)
     }
 }
