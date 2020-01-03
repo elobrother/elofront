@@ -88,14 +88,7 @@ export default {
             await this.$store.dispatch('getAllOrders')
         },
         search(){
-            let element=''
-            // if(this.tipo!='Tipo'){
-            //     element=this.tipo
-            // }
-            if(this.valor!='Valor'){
-                element=this.valor
-                this.$store.commit('searchPriceMutation',element)
-            }
+            this.$store.commit('searchPriceMutation',this.valor)
         }
     },
     created(){

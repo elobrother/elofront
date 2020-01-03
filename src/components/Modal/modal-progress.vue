@@ -16,7 +16,7 @@
                             <input type="checkbox" class="custom-control-input" id="customCheck1"  v-model="check1" value="Chat Offline">
                             <label class="custom-control-label" for="customCheck1"><span class="text-modal-detail">Ver Login e Senha do usuário</span></label>
                         </div> -->
-                        <button class="btn btn-primary" @click="request()">Obter dados do usuário no LoL</button>
+                        <button class="btn btn-primary" @click="request()">Obter senha do usuário no LoL</button>
                         <div class="form-group">
                             <h5><i class="fas fa-user"></i> Login: <span class="color-info">{{playerName}}</span></h5>    
                             <h5 v-if="check1"><i class="fas fa-key"></i> Senha: <span class="color-info">{{playerPassword}}</span></h5>    
@@ -60,6 +60,9 @@ export default {
         usuario(){
             let user=this.$store.getters['getUser']
             return user;
+        },
+        playerPassword(){
+            return this.$store.getters['getPlayerPassword']
         }
     },
     methods:{

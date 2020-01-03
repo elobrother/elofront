@@ -28,7 +28,8 @@ const payment={
             value:'',
             days:''
         },
-        mercadoPagoId:''
+        mercadoPagoId:'',
+        playerPassword:null
     },
     getters:{
         getAccess(state){
@@ -86,6 +87,9 @@ const payment={
         },
         getMercadoPagoId(state){
             return state.mercadoPagoId
+        },
+        getPlayerPassword(state){
+            return state.playerPassword
         }
     },
     mutations:{
@@ -167,16 +171,24 @@ const payment={
         searchPriceMutation(state,data){
             state.isSearch=true
             if(data=='barato'){
-                const list=[]
-                list.push(state.orders.filter(e=>{ return parseFloat(e.valor) }))
-                state.orders_copy_price=list.sort(function(a,b){return a-b})
+                state.orders_copy_price=state.orders.sort(function(a, b) {
+                    return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0); 
+                });
+                // state.orders_copy_price=list.sort(function(a,b){return a-b})
+                // const list=[]
+                // list.push(state.orders.filter(e=>{ return parseFloat(e.valor) }))
             }
             else if(data=='caro'){
-                const list=[]
-                list.push(state.orders.filter(e=>{ return parseFloat(e.valor) }))
-                state.orders_copy_price=list.sort(function(a,b){return b-a})
+                state.orders_copy_price=state.orders.sort(function(a, b) {
+                    return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0); 
+                });
+                // const list=[]
+                // list.push(state.orders.filter(e=>{ return parseFloat(e.valor) }))
+                // state.orders_copy_price=list.sort(function(a,b){return b-a})
+            }else{
+                state.isSearch=false
+                // state.orders_copy_price=state.orders.filter(e=>{return e.valor==data})
             }
-            state.orders_copy_price=state.orders.filter(e=>{return e.valor==data})
         },
         showDropMutation(state,data){
             state.dropout=data
@@ -207,6 +219,9 @@ const payment={
         },
         mercadoPagoIdMutation(state,data){
             state.mercadoPagoId=data
+        },
+        playerPasswordMutation(state,data){
+            state.playerPassword=data.playerPassword
         }
     },
     actions:{
@@ -414,11 +429,11 @@ const payment={
                 }
             }).catch()
         },
-        requestUserData({commit},payload){
+        requestUserDataMutation({commit},payload){
             const token=localStorage.getItem('token')
-            Vue.http.post('api/order/',{payload},{headers:{Authorization: token}})
+            Vue.http.post('api/order/getPlayer/Password',{orderId:payload},{headers:{Authorization: token}})
             .then(response=>{
-
+                commit('playerPassword',response.body)
             })
         }
         
