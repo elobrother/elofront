@@ -50,7 +50,7 @@ const config={
         }
     },
     actions:{
-        sendMessage(payload){
+        sendMessage({commit},payload){
             Vue.http.post('api/sendMail/',{...payload})
             .then(response=>{
                 Vue.noty.success('Mensagem enviada, em breve entraremos em contato com você!')
