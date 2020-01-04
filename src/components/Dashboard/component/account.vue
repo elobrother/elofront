@@ -65,7 +65,7 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label class="col-form-label col-form-label-lg" for="inputLarge">Npme do banco</label>
+                                <label class="col-form-label col-form-label-lg" for="inputLarge">Nome do banco</label>
                                 <input class="form-control form-control-lg" type="text" v-model="bank.name">
                             </div>
                         </div>

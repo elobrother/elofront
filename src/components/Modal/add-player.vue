@@ -66,7 +66,6 @@ export default {
             if(this.formData.name=='' && this.formData.email==''){
                 this.$noty.error('Preencha todos os campos!')
             }else{
-                this.formData.email=this.formData.toLowerCase()
                 this.$store.dispatch('addPlayer',this.formData)
             }
         }

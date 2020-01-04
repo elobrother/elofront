@@ -19,7 +19,7 @@
                         <button class="btn btn-primary" @click="request()">Obter senha do usuário no LoL</button>
                         <div class="form-group">
                             <h5><i class="fas fa-user"></i> Login: <span class="color-info">{{playerName}}</span></h5>    
-                            <h5 v-if="check1"><i class="fas fa-key"></i> Senha: <span class="color-info">{{playerPassword}}</span></h5>    
+                            <h5 v-if="check1"><i class="fas fa-key"></i> Senha: <span class="color-info">{{password}}</span></h5>    
                         </div>
                       </div>
                   </div>
@@ -61,7 +61,7 @@ export default {
             let user=this.$store.getters['getUser']
             return user;
         },
-        playerPassword(){
+        password(){
             return this.$store.getters['getPlayerPassword']
         }
     },

@@ -11,36 +11,36 @@
         </div>   
         <div class="row justify-content-center">
             <div class="col">
-                <span class="form-inline my-2 my-lg-0" v-if="orders.length!=0">
+                <!-- <span class="form-inline my-2 my-lg-0" v-if="orders.length!=0">
                     <input class="form-control mr-sm-2" type="text" id="calendario" v-model="element">
                     <button class="btn btn-success my-2 my-sm-0" @click="search()">buscar por preço</button>
-                </span>
+                </span> -->
                 <div v-if="orders.length!=0" style="height:400px;width:auto; overflow-y:auto">
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">
-                                    <select v-if="products.length!=0" class="custom-select" v-model="tipo" @click="searchType()">
+                                <th scope="col">Tipo
+                                    <!-- <select v-if="orders.length!=0" class="custom-select" v-model="tipo" @click="searchType()">
                                         <option value="Tipo">Tipo</option>
                                         <option key="ELOBOOST">ELOBOOST</option>
                                         <option key="ELOCOACH">ELOCOACH</option>
-                                    </select>
+                                    </select> -->
                                 </th>
                                 <th scope="col">Data de publicação</th>
                                 <th scope="col">Dias</th>
                                 <th scope="col">Valor
-                                    <select v-if="orders.length!=0" class="custom-select" v-model="valor" @click="search()">
+                                    <!-- <select v-if="orders.length!=0" class="custom-select" v-model="valor" @click="search()">
                                         <option value="Valor">Valor</option>
                                         <option key="barato">Mais barato</option>
                                         <option key="caro">Mais Caro</option>
-                                    </select>
+                                    </select> -->
                                 </th>
                                 <th scope="col">Detalhes</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="table-active" v-for="(order,index) in orders" :key="index">
-                                <td scope="row">{{order.tipo}}</td>
+                                <td scope="row">{{order.tipo}} </td>
                                 <td>{{moment(order.createdAt).format('DD/MM/YYYY')}}</td>
                                 <td>{{order.days}}</td>
                                 <td>R$ {{order.valor}}</td>
@@ -49,7 +49,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div v-if="orders.length==0">
+                <div v-else>
                     <p class="text-center">Não há serviços no momento</p>
                 </div>
             </div>
