@@ -7,7 +7,7 @@ const config={
         elo:false,
         header:true,
         footer:true,
-        elocoach:{}
+        elocoach:{},
     },
     getters:{
         getEloStatus(state){
@@ -21,7 +21,7 @@ const config={
         },
         getEloCoach(state){
             return state.elocoach
-        }
+        },
     },
     mutations:{
         changeStatusMutation(state,data){
@@ -62,8 +62,8 @@ const config={
                 Vue.noty.success('Mensagem enviada, em breve entraremos em contato com você!')
             }).catch()
         },
-        elocoach({commit}){
-            Vue.http.get('api/elos/')
+        async elocoach({commit}){
+            await Vue.http.get('api/elos/')
             .then(response=>{
                 commit('elocoachMutation',response.body)
             }).catch()

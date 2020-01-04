@@ -31,19 +31,21 @@
                         <thead>
                             <tr>
                             <th scope="col">
-                                <select v-if="products.length!=0" class="custom-select" v-model="tipo" @click="search()">
+                                Tipo
+                                <!-- <select v-if="products.length!=0" class="custom-select" v-model="tipo" @click="search()">
                                     <option value="Tipo">Tipo</option>
                                     <option key="ELOBOOST">ELOBOOST</option>
                                     <option key="ELOCOACH">ELOCOACH</option>
-                                </select>
+                                </select> -->
                             </th>
                             <th scope="col">
-                                <select v-if="products.length!=0" class="custom-select" v-model="status" @click="search()">
+                                Status
+                                <!-- <select v-if="products.length!=0" class="custom-select" v-model="status" @click="search()">
                                     <option value="Status">Status</option>
                                     <option key="AGUARDANDO">Aguardando</option>
                                     <option key="EM ANDAMENTO">Em andamento</option>
                                     <option key="CONCLUIDO">Concluido</option>
-                                </select>
+                                </select> -->
                             </th>
                             <th scope="col">Pagamento</th>    
                             <th scope="col">Ação</th>
