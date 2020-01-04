@@ -10,7 +10,7 @@
         </div>
         <div class="row justify-content-center mb-4">
             <div class="col text-center">
-                <router-link class="btn btn-primary" to="/servicos">Comprar serviço</router-link>
+                <router-link class="btn btn-success" to="/servicos">Comprar serviço</router-link>
                 <!-- <button  @click="services()"></button> -->
             </div>
         </div>
@@ -39,7 +39,7 @@
                                 </select> -->
                             </th>
                             <th scope="col">
-                                Status
+                                Status do jogo
                                 <!-- <select v-if="products.length!=0" class="custom-select" v-model="status" @click="search()">
                                     <option value="Status">Status</option>
                                     <option key="AGUARDANDO">Aguardando</option>

@@ -119,7 +119,7 @@ const payment={
             state.product=state.products.filter(e=>{return e._id==data})
         },
         cupomValidMutation(state,data){
-            state.formData.valor=((parseFloat(state.formData.valor))*(1-(data/100))).toFixed(2)
+            state.formData.value=((parseFloat(state.formData.value))*(1-(data/100))).toFixed(2)
         },
         allCupomMutation(state,data){
             state.cupoms=data
@@ -237,7 +237,6 @@ const payment={
             const order=Object.assign(payload,{id:id})
             await Vue.http.post('api/paypal/buy',{order},{headers:{Authorization: token}})
             .then(response=>{
-                console.log(response.body)
                 window.location.href=response.body
                 // window.open(response.body, "_target");
             }).catch()
@@ -247,7 +246,6 @@ const payment={
             const token=localStorage.getItem('token')
             await Vue.http.post(`api/paypal/success`,{...payload},{headers:{Authorization: token}})
             .then(response=>{
-                console.log(response.body)
                 commit('redirectPaymentMutation')
             }).catch()
         },
@@ -263,10 +261,8 @@ const payment={
             const email=localStorage.getItem('email')
             const name=email.split('@')[0]
             const order=Object.assign(payload,{id:id,userName:name,userEmail:email})
-            console.log({order:order})
             await Vue.http.post('api/mercadopago/',{order:order},{headers:{Authorization: token}})
             .then(response=>{
-                console.log(response.body)
                 window.location.href=response.body
                 // window.open(response.body, "_target");
             }).catch()
@@ -275,10 +271,8 @@ const payment={
             const token=localStorage.getItem('token')
             const id=localStorage.getItem('qweklwq')
             const data={'collection_id':payload,'OrderId':id}
-            console.log(data)
             await Vue.http.post('api/mercadopago/success',{data},{headers:{Authorization: token}})
             .then(response=>{
-                console.log(response.body)
                 localStorage.removeItem('qweklwq')
                 commit('redirectPaymentMutation')
             }).catch()
@@ -296,8 +290,6 @@ const payment={
             await Vue.http.get('api/order/',{headers:{Authorization: token}})
             .then(response=>{
                 const all=response.body.filter(e=>{return e.userPlayer==null})
-                console.log('todos os pedidos')
-                console.log(all)
                 commit('ordersMutation',all)
             }).catch(err=>{Vue.noty.error('Ocorreu um erro ao buscar os dados!')})
         },
@@ -307,7 +299,6 @@ const payment={
             const userId=localStorage.getItem('id')
             await Vue.http.get(`api/order/${userId}`,{headers:{Authorization: token}})
             .then(response=>{
-                console.log('jogador')
                 commit('gamesMutation',response.body)
             }).catch()
         },
@@ -316,8 +307,6 @@ const payment={
             const userId=localStorage.getItem('id')
             await Vue.http.get(`api/order/${userId}`,{headers:{Authorization: token}})
             .then(response=>{
-                console.log('usuario')
-                console.log(response.body)
                 commit('productsMutation',response.body)
             }).catch()
         },
@@ -327,9 +316,7 @@ const payment={
             const name=payload
             await Vue.http.get(`api/cupom/${name}`,{headers:{Authorization:token}})
             .then(response=>{
-                console.log(response.body.cupom)
-                console.log(response.body.cupom[0].value)
-                commit('cupomValidMutation',response.body.cupom[0].cupom)
+                commit('cupomValidMutation',response.body.cupom[0].value)
             }).catch()
         },
         async createCupom({commit},payload){
@@ -337,7 +324,6 @@ const payment={
             await Vue.http.post('api/cupom/',{...payload},{headers:{Authorization: token}})
             .then(response=>{
                 Vue.noty.success('Cupom criado com sucesso!')
-                console.log(response.body.cupom)
                 commit('addCupomMutation',response.body.cupom)
             }).catch(err=>console.log(err))
         },
@@ -345,7 +331,6 @@ const payment={
             const token=localStorage.getItem('token')
             await Vue.http.get('api/cupom/',{headers:{Authorization: token}})
             .then(response=>{
-                console.log(response.body)
                 commit('allCupomMutation',response.body)
             }).catch()
         },
@@ -362,7 +347,6 @@ const payment={
         //Job
         async selectJob({commit},payload){
             const token=localStorage.getItem('token')
-            console.log(payload)
             const id=payload
             const userPlayer=localStorage.getItem('id')
             const pedido={userPlayer:userPlayer}
@@ -373,9 +357,7 @@ const payment={
         },
         async updateStatus({commit},payload){
             const token=localStorage.getItem('token')
-            console.log(payload)
             const id=payload.id
-            console.log(id)
             const pedido={status:payload.status}
             await Vue.http.put(`api/order/updateStatus/${id}`,{pedido:pedido},{headers:{Authorization: token}})
             .then(response=>{
@@ -384,7 +366,6 @@ const payment={
         },
         async dropoutOrder({commit},payload){
             const token=localStorage.getItem('token')
-            console.log(payload)
             await Vue.http.post(`api/order/dropouts/${payload.id}`,{...payload},{headers:{Authorization: token}})
             .then(response=>{
                 Vue.noty.success('Serviço removido da sua lista!')
@@ -393,22 +374,16 @@ const payment={
         },
         async getAllDropout({commit}){
             const token=localStorage.getItem('token')
-            console.log('chega aqui?')
             await Vue.http.get('api/order/dropouts/getAll',{headers:{Authorization: token}})
             .then(response=>{
-                console.log('===============')
-                console.log(response.body)
-                console.log('--------------')
                 commit('showDropMutation',response.body)
             }).catch()
         },
         //get elo
         async sendEloMd10({commit},payload){
-            console.log(payload)
             const token=localStorage.getItem('token')
             await Vue.http.post('api/elos/md10/getValue',payload)
             .then(response=>{
-                console.log(response.body)
                 commit('eloboostMutation',response.body)
             }).catch(err=>console.log(err))
         },
@@ -416,13 +391,13 @@ const payment={
             const token=localStorage.getItem('token')
             await Vue.http.post('api/elos/',payload)
             .then(response=>{
-                console.log(response.body)
                 commit('eloboostMutation',response.body)
             }).catch(err=>console.log(err))
         },
         //cancelOrder
         async cancelOrder({commit},payload){
-            await Vue.http.post('api/order/user/cancelOrder',{...payload})
+            const token=localStorage.getItem('token')
+            await Vue.http.post('api/order/user/cancelOrder',{...payload},{headers:{Authorization:token}})
             .then(response=>{
                 // commit('updateOrdeMutation',payload.id)
                 Vue.noty.success(response.body.message)

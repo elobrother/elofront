@@ -16,7 +16,7 @@
                             </div>
                             <span class="text-info-elo center-img"></span>
                             <p class="text-info-elo text-center">NÓS JOGAREMOS COM A SUA CONTA</p>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" @click="page('eloboost')">Contratar</button>
+                            <button type="button" class="btn btn-success btn-lg btn-block" @click="page('eloboost')">Contratar</button>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                             <img src="@/assets/coach.png" alt="" class="img-fluid center-img" style="height:200px">
                         </div>   
                         <p class="text-info-elo text-center">Suba de elo com a ajuda dos nossos instrutores</p>
-                        <button type="button" class="btn btn-primary btn-lg btn-block" @click="page('elocoach')">Contratar</button>
+                        <button type="button" class="btn btn-success btn-lg btn-block" @click="page('elocoach')">Contratar</button>
                     </div>
                     </div>
                 </div>
