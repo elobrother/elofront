@@ -36,8 +36,8 @@ Vue.use(VueScrollReveal,{
 })
 
 Vue.use(VueResource);
-// Vue.http.options.root = 'https://elobrotherapi.herokuapp.com';
-Vue.http.options.root = 'http://localhost:3000';
+Vue.http.options.root = 'https://elobrotherapi.herokuapp.com';
+// Vue.http.options.root = 'http://localhost:3000';
 
 Vue.use(VueScrollTo, {
   container: "body",
