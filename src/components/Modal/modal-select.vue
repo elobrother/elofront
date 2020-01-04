@@ -51,15 +51,12 @@ export default {
     },
     computed:{
         order(){
-            console.log('o que vem aqui?')
             let order= this.$store.getters['getOneOrder']
-            console.log(order)
             return order[0]
         }
     },
     methods:{
         getJob(id){
-            console.log(id)
             this.$store.dispatch('selectJob',id)
         }
     }

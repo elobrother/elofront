@@ -22,6 +22,7 @@
                           <h5 class="text-modal-detail text-center mt-1 mb-2">Dados Bancários</h5>
                           <p class="text-center">Nome Completo: <strong>{{person[0].bankAccount.fullName}}</strong></p> 
                           <p class="text-center">CPF: <strong>{{person[0].bankAccount.cpf}}</strong></p> 
+                          <p class="text-center">Nome do banco: <strong>{{person[0].bankAccount.name}}</strong></p> 
                           <p class="text-center">Agência: <strong>{{person[0].bankAccount.agency}}</strong></p> 
                           <p class="text-center">ContaCorrente: <strong>{{person[0].bankAccount.account}}</strong></p> 
                         </div>

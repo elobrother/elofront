@@ -107,7 +107,7 @@ const payment={
             state.orders=data
         },
         orderMutation(state,data){
-            state.order=state.orders.filter(e=>{return e._id==data})
+            state.order=state.orders.filter(e=>{return e._id===data})
         },
         gamesMutation(state,data){
             state.games=data

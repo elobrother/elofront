@@ -102,7 +102,7 @@ export default {
             const elements=this.$store.getters['getUser'];
             this.formData={name:elements.name,email:elements.email,phoneNumber:elements.phoneNumber}
             if(elements.bankAccount){
-                this.bank={agency:elements.bankAccount.agency,account:elements.bankAccount.account,fullName:elements.bankAccount.fullName,bankName:elements.name}
+                this.bank={agency:elements.bankAccount.agency,account:elements.bankAccount.account,fullName:elements.bankAccount.fullName,name:elements.name}
             }
             return elements;
         }
