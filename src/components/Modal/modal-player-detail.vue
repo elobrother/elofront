@@ -61,6 +61,7 @@ export default {
     },
     methods: {
       remove(id){
+        this.display=true
         this.$store.dispatch('removePlayer',id)
       },
     },
