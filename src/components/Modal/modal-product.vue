@@ -16,8 +16,6 @@
                         <h3><span class="color-modal">Tipo: </span> <span class="text-modal-detail">{{product.tipo}}</span></h3>
                         <h4><span class="color-modal">Status do jogo: </span> <span class="text-modal-detail">{{product.status}}</span></h4>
                         <h4><span class="color-modal">Status do pagamento: </span> <span class="text-modal-detail">{{product.paymentsStatus}}</span></h4>
-                        <h4><span class="color-modal">Login no LoL: </span> <span class="text-modal-detail">{{product.playerName}}</span></h4>
-                        <h4><span class="color-modal">Senha no Lol: </span> <span class="text-modal-detail">{{product.playerPassword}}</span></h4>
                         <h4><span class="color-modal">Valor: </span> <span class="text-modal-detail">R$ {{product.valor}}</span></h4>
                         <h4><span class="color-modal">Descrição: </span> <span class="text-modal-detail">{{product.description}}</span></h4>
                       </div>
