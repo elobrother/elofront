@@ -74,9 +74,7 @@ export default {
     computed:{
         games(){
             this.matches=this.$store.getters['getGames']
-            console.log('E aqui, o que vem?')
             const asd=this.$store.getters['getGames']
-            console.log(asd)
             return this.$store.getters['getGames']
         },
     },

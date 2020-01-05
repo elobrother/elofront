@@ -137,10 +137,12 @@ const payment={
         searchProductMutation(state,data){
             if(data!=''){
                 state.isSearch=true
-                state.orders_copy=state.orders.filter(e=>{return e.tipo==data})
+                state.orders_copy=state.orders.filter(e=>{return e.code==data.toUpperCase()})
                 if(state.orders_copy.length==0){
                    state.orders_copy=state.orders
                 }
+            }else{
+                state.isSearch=false
             }
         },
         changeSeachMutation(state){
@@ -166,6 +168,8 @@ const payment={
                 if(state.games_copy.length==0){
                     state.games_copy=state.games
                 }
+            }else{
+                state.isSearch=false
             }
         },
         searchPriceMutation(state,data){

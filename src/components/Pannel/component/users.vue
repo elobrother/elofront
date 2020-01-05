@@ -64,14 +64,11 @@ export default {
     },
     computed:{
         users(){
-            console.log('Me diz, e aqui meu rei?')
-            console.log(this.$store.getters['getAllUsers'])
             return this.$store.getters['getAllUsers']
         }
     },
     methods: {
         search(){
-            // this.load=true
             this.$store.commit('searchUsersMutation',this.formData)
         },
         seeUser(id){

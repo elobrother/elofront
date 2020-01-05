@@ -99,12 +99,20 @@ const admin={
         },
         searchUsersMutation(state,data){
             if(data.page=='player'){
-                state.isSearch=true
-                state.players_copy=state.players.filter(e=>{return e.name==data.name})
+                if(data!=''){
+                    state.isSearch=true
+                    state.players_copy=state.players.filter(e=>{return e.name==data.name})
+                }else{
+                    state.isSearch=false
+                }
             }
             if(data.page=='user'){
-                state.isSearch=true
-                state.user_copy=state.users.filter(e=>{return e.name==data.name})
+                if(data!=''){
+                    state.isSearch=true
+                    state.user_copy=state.users.filter(e=>{return e.name==data.name})
+                }else{
+                    state.isSearch=false
+                }
             }
         },
         changeSeachMutation(state){
