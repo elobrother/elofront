@@ -95,8 +95,6 @@ const user={
             await Vue.http.post('api/user/login',{...payload})
             .then(response=>{
                 if(response.body.user){
-                    console.log('aqui?')
-                    console.log(response.body)
                     localStorage.setItem("token",response.body.token)
                     localStorage.setItem("email",response.body.user.email)
                     localStorage.setItem("id",response.body.user._id)
@@ -110,7 +108,6 @@ const user={
             await Vue.http.post('api/user/create',{...payload})
             .then(response=>{
                 if(response.body.user){
-                    console.log(response)
                     localStorage.setItem("token",response.body.token)
                     localStorage.setItem("email",response.body.user.email)
                     localStorage.setItem("id",response.body.user._id)
@@ -147,14 +144,15 @@ const user={
 
             }).catch()
         },
-        async recuperaDados({commit},payload){
+        async recuperaDados({commit,state},payload){
             const token=localStorage.getItem('token')
             if(token){
-                console.log('entrei aqui')
-                await Vue.http.get(`api/user/${payload}`,{headers:{Authorization: token}})
-                .then(response=>{
-                    commit("refreshUser",response.body.user)
-                }).catch()
+                if(state.formData.id==''){
+                    await Vue.http.get(`api/user/${payload}`,{headers:{Authorization: token}})
+                    .then(response=>{
+                        commit("refreshUser",response.body.user)
+                    }).catch()
+                }
             }
         },
         async account({commit},payload){
