@@ -10,7 +10,7 @@
                     <h5>A EloBrother não possui qualquer vínculo ou associação com a Riot Games e seu site, produtos e afins.</h5>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">OK, estou ciente e concordo</button>
+                <button type="button" class="btn btn-success btn-lg btn-block" data-dismiss="modal">OK, estou ciente e concordo</button>
               </div>
             </div>
           </div>

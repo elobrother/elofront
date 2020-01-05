@@ -12,7 +12,7 @@
                             <div class="col-md-8">
                                 <div class="height-text-button">
                                     <h2 class="text-center text-information-white">Necessitando de ajuda para subir de elo?</h2>
-                                    <button style="height:70px" class="btn btn-primary btn-lg btn-block" v-scroll-to="'#services'">
+                                    <button style="height:70px" class="btn btn-success btn-lg btn-block" v-scroll-to="'#services'">
                                         Clique aqui e conheça nossos serviços
                                     </button>
                                 </div>
