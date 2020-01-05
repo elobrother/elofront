@@ -100,9 +100,16 @@ export default {
     computed: {
         user(){
             const elements=this.$store.getters['getUser'];
+            console.log(elements)
             this.formData={name:elements.name,email:elements.email,phoneNumber:elements.phoneNumber}
             if(elements.bankAccount){
-                this.bank={agency:elements.bankAccount.agency,account:elements.bankAccount.account,fullName:elements.bankAccount.fullName,name:elements.name}
+                this.bank={
+                    name:elements.bankAccount.name,
+                    agency:elements.bankAccount.agency,
+                    account:elements.bankAccount.account,
+                    fullName:elements.bankAccount.fullName,
+                    cpf:elements.bankAccount.cpf
+                }
             }
             return elements;
         }

@@ -16,9 +16,9 @@
                             <input type="checkbox" class="custom-control-input" id="customCheck1"  v-model="check1" value="Chat Offline">
                             <label class="custom-control-label" for="customCheck1"><span class="text-modal-detail">Ver Login e Senha do usuário</span></label>
                         </div> -->
-                        <button class="btn btn-primary" @click="request()">Obter senha do usuário no LoL</button>
+                        <button class="btn btn-outline-primary mb-3" @click="request()">{{btnText}}</button>
                         <div class="form-group">
-                            <h5><i class="fas fa-user"></i> Login: <span class="color-info">{{playerName}}</span></h5>    
+                            <h5 v-if="check1"><i class="fas fa-user"></i> Login: <span class="color-info">{{playerName}}</span></h5>    
                             <h5 v-if="check1"><i class="fas fa-key"></i> Senha: <span class="color-info">{{password}}</span></h5>    
                         </div>
                       </div>
@@ -54,6 +54,7 @@ export default {
         return {
             status:'',
             check1:false,
+            btnText:'Obter senha do usuário no LoL'
         }
     },
     computed:{
@@ -71,7 +72,14 @@ export default {
             this.$store.dispatch('updateStatus',obj)
         },
         request(){
-            this.$store.dispatch('requestUserData',this.id)
+            if(this.btnText==='Obter senha do usuário no LoL'){
+                this.$store.dispatch('requestUserData',this.id)
+                this.check1=true
+                this.btnText='Esconder dados'
+            }else{
+                this.btnText='Obter senha do usuário no LoL'
+                this.check1=false
+            }
         }
     }
 }

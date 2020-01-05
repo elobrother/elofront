@@ -221,7 +221,7 @@ const payment={
             state.mercadoPagoId=data
         },
         playerPasswordMutation(state,data){
-            state.playerPassword=data.playerPassword
+            state.playerPassword=data
         }
     },
     actions:{
@@ -414,12 +414,14 @@ const payment={
                 }
             }).catch()
         },
-        async requestUserDataMutation({commit},payload){
+        async requestUserData({commit,state},payload){
             const token=localStorage.getItem('token')
-            await Vue.http.post('api/order/getPlayer/Password',{orderId:payload},{headers:{Authorization: token}})
-            .then(response=>{
-                commit('playerPassword',response.body)
-            })
+            if(state.playerPassword==null){
+                await Vue.http.post('api/order/getPlayer/Password',{orderId:payload},{headers:{Authorization: token}})
+                .then(response=>{
+                    commit('playerPasswordMutation',response.body.playerPassword)
+                })
+            }
         }
         
     }
