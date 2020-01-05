@@ -13,7 +13,7 @@
                     <div class="card border-primary mb-3">
                         <div class="card-header text-center text-payment">Dados Pessoais do LoL</div>
                         <div class="card-body">
-                            <p class="text-danger text-center">Atenção! Seus dados serão criptografados e armazenados em nossa base de dados</p> 
+                            <p class="text-danger text-center">Atenção! Seus dados serão criptografados e armazenados em nossa base de dados.</p> 
                             <div class="form-group">
                                 <label class="col-form-label col-form-label-lg" for="inputLarge">Usuário no LoL</label>
                                 <input class="form-control form-control-lg" type="text" v-model="loginLol.playerName">
@@ -39,21 +39,21 @@
                         <div class="card-body">
                             <h4 class="card-title"><span class="intense">ELOJOB:</span> {{formData.tipo}}</h4>
                             <h5 class="card-text">{{formData.description}}</h5>
-                            <h5 class="card-text">{{formData.days}} dias</h5>
-                            <div v-if="formData.tipo=='ELOBOOST'">
+                            <h5 class="card-text">{{formData.days===1 ? `${formData.days} dia` : `${formData.days} dias` }}</h5>
+                            <div v-if="formData.tipo!='ELOCOACH'">
                                 <hr>
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1"  v-model="check1" value="Chat Offline">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1" v-model="check1" @change="alwaysCheck()" checked value="Chat Offline">
                                         <label class="custom-control-label" for="customCheck1">Chat Offline</label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck2" v-model="check2" value="Defina horários">
-                                        <label class="custom-control-label" for="customCheck2">Defina horários</label>
+                                        <input type="checkbox" class="custom-control-input" id="customCheck2" v-model="check2" @change="addTime()" value="Defina horários">
+                                        <label class="custom-control-label" for="customCheck2">Defina horários <span class="text-danger">+10% no valor total</span></label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck3" v-model="check3" value="Escolha de Rotas">
-                                        <label class="custom-control-label" for="customCheck3">Escolha de Rotas</label>
+                                        <input type="checkbox" class="custom-control-input" id="customCheck3" v-model="check3" @change="addRoutes()" value="Escolha de Rotas">
+                                        <label class="custom-control-label" for="customCheck3">Escolha de Rotas <span class="text-danger">+10% no valor total</span></label>
                                     </div>
                                     <div class="form-group" v-if="check2 || check3">
                                         <textarea class="form-control" placeholder="Ex.: Posso jogar apenas as terças depois das 20hrs" rows="3" v-model="descricao"></textarea>
@@ -191,7 +191,6 @@ export default {
                 const id=localStorage.getItem('id')
                 const obj = Object.assign(this.formData, this.loginLol,{userclientid:id,aditionals:{chatOffline:this.check1,timeToPlay:this.check2,description:this.descricao,routes:this.check3}});
                 if(this.select=="paypal"){
-                    console.log('caiu no paypal')
                     this.btnName='Redirecionando...'
                     this.$store.dispatch('callPaypal',obj)
                 }else{
@@ -204,6 +203,23 @@ export default {
             var x = document.getElementById("pass");
             if (x.type === "password") { x.type = "text"; } 
             else { x.type = "password"; }
+        },
+        addTime(){
+            if(this.check2){
+                this.formData.value=(this.formData.value*(1.1)).toFixed(2)
+            }else{
+                this.formData.value=(parseFloat(this.formData.value)/(1.1)).toFixed(2)
+            }
+        },
+        addRoutes(){
+            if(this.check3){
+                this.formData.value=(this.formData.value*(1.1)).toFixed(2)
+            }else{
+                this.formData.value=(parseFloat(this.formData.value)/(1.1)).toFixed(2)
+            }
+        },
+        alwaysCheck(){
+            this.check1=true
         }
     },
     mounted(){
