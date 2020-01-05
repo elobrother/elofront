@@ -174,7 +174,6 @@ const user={
             const token=localStorage.getItem('token')
             await Vue.http.post('api/user/user/forgotPassword',{...payload},{headers:{Authorization: token}})
             .then(response=>{
-                console.log(response)
                 Vue.noty.warning(response.body)
             }).catch()
         }, 

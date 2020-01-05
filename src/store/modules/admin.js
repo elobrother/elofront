@@ -146,7 +146,6 @@ const admin={
             })
         },
         removePlayerMutation(state,data){
-            console.log('chega no mutation')
             state.isSearch=false
             state.players=state.players.filter(e=>{return e._id!=data})
         }
@@ -169,7 +168,6 @@ const admin={
             const id=localStorage.getItem('id')
             Vue.http.post('api/user/create',{...payload},{headers:{Authorization: token}})
             .then(response=>{
-                console.log(response.body.user)
                 Vue.noty.success('Jogador cadastrado na base')
                 commit('newPlayerMutation',response.body.user)
             }).catch()
@@ -207,12 +205,6 @@ const admin={
 
             }).catch()
         },
-        // dropouts({commit}){
-        //     Vue.http.post('api')
-        //     .then(response=>{
-
-        //     }).catch()
-        // },
         updatePrice({commit},payload){
             const id=localStorage.getItem('id')
             const token=localStorage.getItem('token')

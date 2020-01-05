@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div v-if="dropout.length==0">
-                    <p class="text-center">Não há desistências</p>
+                    <p class="text-center mt-4">Usuário não encontrado</p>
                 </div>
             </div>
         </div>

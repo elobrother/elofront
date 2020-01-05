@@ -73,7 +73,6 @@ import './style.css'
 import Select from './component/select.vue';
 import Modal from '../Modal/modal-login.vue'
 import router from '../../routes';
-import config from '../../helper/config';
 import eloId from '../../helper/elos';
 
 export default {
@@ -155,7 +154,6 @@ export default {
             this.order=`Atual: ${this.selectNameAtual} ${this.selectPosAtual} para Desejado: ${this.selectNameDesejado} ${this.selectPosDesejado}`
         },
         seleciona(){
-            console.log(this.formData)
             this.$store.commit('confirmOrderMutation',this.formData)
         },
         confirm(){

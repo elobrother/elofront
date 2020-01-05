@@ -138,9 +138,9 @@ const payment={
             if(data!=''){
                 state.isSearch=true
                 state.orders_copy=state.orders.filter(e=>{return e.code==data.toUpperCase()})
-                if(state.orders_copy.length==0){
-                   state.orders_copy=state.orders
-                }
+                // if(state.orders_copy.length==0){
+                //    state.orders_copy=state.orders
+                // }
             }else{
                 state.isSearch=false
             }
@@ -178,20 +178,13 @@ const payment={
                 state.orders_copy_price=state.orders.sort(function(a, b) {
                     return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0); 
                 });
-                // state.orders_copy_price=list.sort(function(a,b){return a-b})
-                // const list=[]
-                // list.push(state.orders.filter(e=>{ return parseFloat(e.valor) }))
             }
             else if(data=='caro'){
                 state.orders_copy_price=state.orders.sort(function(a, b) {
                     return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0); 
                 });
-                // const list=[]
-                // list.push(state.orders.filter(e=>{ return parseFloat(e.valor) }))
-                // state.orders_copy_price=list.sort(function(a,b){return b-a})
             }else{
                 state.isSearch=false
-                // state.orders_copy_price=state.orders.filter(e=>{return e.valor==data})
             }
         },
         showDropMutation(state,data){
@@ -203,9 +196,6 @@ const payment={
         updateCupom(state,data){
             state.cupoms=state.cupoms.filter(e=>{return e._id!=data})
         },
-        // updateOrdeMutation(state,data){
-        //     state.products=state.products.filter(e=>{return e._id!=data})
-        // },
         dropoutsMutation(state,data){
             if(data!=''){
                 state.isSearch=true

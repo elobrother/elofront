@@ -42,7 +42,6 @@ export default {
     },
     components:{
         Modal,
-        // error
     },
     methods: {
         close(){

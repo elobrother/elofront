@@ -10,11 +10,11 @@
         </div>
         <div class="row">
             <div class="col">
-                <span class="form-inline my-2 my-lg-0" v-if="orders.length!=0">
-                    <input class="form-control mr-sm-2" type="text" id="calendario" v-model="element">
+                <span class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" id="calendario" v-model.trim="element">
                     <button class="btn btn-success my-2 my-sm-0" @click="search()">Buscar por N* ordem</button>
                 </span>
-                <div  v-if="orders.length!=0" style="height:400px;width:auto;display:block; overflow-y:auto" class="mt-5">
+                <div v-if="orders.length!=0" style="height:400px;width:auto;display:block; overflow-y:auto" class="mt-5">
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -35,7 +35,7 @@
                     </table>
                 </div>
                 <div v-if="orders.length==0">
-                    <p class="text-center">Você ainda não pegou um serviço</p>
+                    <p class="text-center mt-3">Esse código não existe</p>
                 </div>
                 <!-- <div>
                     <button class="btn btn-primary" @click="more()"></button>

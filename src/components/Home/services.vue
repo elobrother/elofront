@@ -31,7 +31,6 @@
                                 </div>
                                 <p class="text-info-elo text-center">Defina seu elo com as 10 primeiras partidas</p>
                                 <button type="button" class="btn btn-success btn-lg btn-block" @click="page('md10')">Contratar</button>
-                                <!-- <router-link class="btn btn-success btn-lg btn-block" to="/md10">Contratar</router-link> -->
                             </div>
                         </div>
                     </div>
