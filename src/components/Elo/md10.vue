@@ -56,10 +56,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-5 mb-5">
-                <div class="col-md-2"></div>
+            <div class="row mt-5 mb-5 justify-content-center">
                 <div class="col-md-8">
-                    <div v-if="show">
+                    <div v-if="this.$store.getters.getShow">
                         <button v-if="display"
                             class="btn btn-success shadow-lg button-confirm btn-lg btn-block"
                             @click="confirm()"
@@ -72,9 +71,13 @@
                         >
                             Total: R$ {{returnElo.value}}.00 - {{returnElo.days}} dias - Avançar
                         </button>
+                    </div>
+                    <div v-if="updateButton">
+                        <div v-if="!this.$store.getters.getShow" class="spinner-border text-success center-img" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </div> 
                 </div>
-                <div class="col-md-2"></div>
             </div>
         </div>
 
@@ -102,7 +105,8 @@ export default {
             button:false,
             order:null,
             show:false,
-            sliderValue:4
+            sliderValue:4,
+            updateButton:false
         }
     },
     components:{
@@ -123,17 +127,19 @@ export default {
     methods:{
         select(){
             const data={eloName:this.formData.description,match:`${this.sliderValue}`}
+            this.updateButton=true
             this.$store.dispatch('sendEloMd10',data)
             this.show=true
         },
         confirm(){
-            console.log(this.formData) 
             this.$store.commit('confirmOrderMutation',this.formData)
             this.show=false
         }
     },
     destroyed(){
         this.formData={value:'',tipo:'MD10',description:'',days:''}
+        this.updateButton=false
+        this.$store.commit("closeShowMutation")
         this.$store.commit('deslogadoMutation')
         this.$store.commit("changeStatusFooter",true)
     }

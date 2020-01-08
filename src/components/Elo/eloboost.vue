@@ -17,7 +17,8 @@
                                 :boost="boost" 
                                 :name="selectNameAtual" 
                                 :pos="selectPosAtual" 
-                                @data="atual"  
+                                @dataNome="atualName"  
+                                @dataId="atualId"  
                             />
                         </div>
                     </div>
@@ -31,7 +32,8 @@
                                 :boost="boost" 
                                 :name="selectNameDesejado" 
                                 :pos="selectPosDesejado"
-                                @data="desejado" 
+                                @dataNome="desejadoName" 
+                                @dataId="desejadoId" 
                             />
                         </div>
                     </div>
@@ -43,10 +45,9 @@
                     <button class="btn btn-primary btn-block button-validate" @click="confirm()">Confirmar ELOs</button>
                 </div>
             </div> 
-            <div class="row mt-5 mb-5">
-                <div class="col-md-2"></div>
+            <div class="row mt-5 mb-5 justify-content-center">
                 <div class="col-md-8">
-                    <div v-if="show">
+                    <div v-if="this.$store.getters.getShow">
                         <button v-if="display"
                             class="btn btn-success shadow-lg button-confirm btn-lg btn-block"
                             @click="seleciona()"
@@ -60,8 +61,12 @@
                             Total: R$ {{returnElo.value}}.00 - {{returnElo.days}} dias - Avançar
                         </button>
                     </div> 
+                    <div v-if="updateButton">
+                        <div v-if="!this.$store.getters.getShow" class="spinner-border text-success center-img" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2"></div>
             </div>
         </div>
 
@@ -80,9 +85,9 @@ export default {
         return{
             goto:{page:'eloboost',status:true},
             selectNameDesejado:'Ferro',
-            selectPosDesejado:'Selecione',
+            selectPosDesejado:'IV',
             selectNameAtual:'Ferro',
-            selectPosAtual:'Selecione',
+            selectPosAtual:'IV',
             boost:{
                 names:[
                     {state:'Ferro'},
@@ -113,7 +118,7 @@ export default {
             numDesejado:1,
             button:false,
             order:null,
-            show:false,
+            updateButton:false,
             currentElo:null,
             requiredElo:null
         }
@@ -126,6 +131,11 @@ export default {
         // this.$store.commit("changeStatusMutation",this.goto) 
         this.$store.commit("changeStatusFooter",false)
     },
+    mounted(){
+        if(this.$store.getters.getShow){
+            this.updateButton=false
+        }
+    },
     computed: {
         returnElo(){
             this.formData.value=`${this.$store.getters['getEloBoost'].value}.00`
@@ -134,52 +144,48 @@ export default {
         }
     },
     methods:{
-        atual(value){
-            this.selectNameAtual=value.stage;
-            this.selectPosAtual=value.level;
-            this.inicio=`${this.selectNameAtual}${this.selectPosAtual}`
-            this.currentElo=this.inicio
-            const resp=eloId.value(this.inicio).shift()
-            this.inicio=null
-            this.numAtual=resp.id
+        atualName(value){
+            this.selectNameAtual=value
         },
-        desejado(value){
-            this.selectNameDesejado=value.stage;
-            this.selectPosDesejado=value.level;
-            this.fim=`${this.selectNameDesejado}${this.selectPosDesejado}`
-            this.requiredElo=this.fim
-            const resp= eloId.value(this.fim).shift()
-            this.fim=null;
-            this.numDesejado=resp.id
-            this.order=`Atual: ${this.selectNameAtual} ${this.selectPosAtual} para Desejado: ${this.selectNameDesejado} ${this.selectPosDesejado}`
+        atualId(value){
+            this.selectPosAtual=value
+        },
+        desejadoName(value){
+            this.selectNameDesejado=value;
+        },
+        desejadoId(value){
+            this.selectPosDesejado=value
         },
         seleciona(){
             this.$store.commit('confirmOrderMutation',this.formData)
         },
         confirm(){
+            const respAtual=`${this.selectNameAtual}${this.selectPosAtual}`
+            const respDesejado=`${this.selectNameDesejado}${this.selectPosDesejado}`
+            const result1=eloId.value(respAtual).shift()
+            const result2=eloId.value(respDesejado).shift()
+            this.numAtual=result1.id
+            this.numDesejado=result2.id
             if(this.numAtual<this.numDesejado){
-                this.numAtual=1
-                this.numDesejado=1
-                this.formData.description=this.order 
-                this.selectNameDesejado='Ferro',
-                this.selectPosDesejado='Selecione',
-                this.selectNameAtual='Ferro',
-                this.selectPosAtual='Selecione',
+                this.formData.description=`Atual: ${this.selectNameAtual} ${this.selectPosAtual} para Desejado: ${this.selectNameDesejado} ${this.selectPosDesejado}`
                 this.button=false 
-                const data={currentElo:this.currentElo,requiredElo:this.requiredElo}
+                const data={currentElo:respAtual,requiredElo:respDesejado}
+                this.updateButton=true
                 this.$store.dispatch('sendEloBoost',data)
-                this.show=true
             }else{
                 this.$noty.warning('O ELO desejado deve ser maior que o atual')
                 this.button=true
-                this.show=false
+                this.$store.commit("closeShowMutation")
+                this.updateButton=false
             }
         }
     },
     destroyed(){
         this.numAtual=this.numDesejado=1
+        this.updateButton=false
         this.fim=this.inicio='FerroIV',
         this.formData={value:'',tipo:'ELOBOOST',description:'',days:''}
+        this.$store.commit("closeShowMutation")
         this.$store.commit('deslogadoMutation')
         this.$store.commit("changeStatusFooter",true)
     }

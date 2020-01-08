@@ -29,7 +29,9 @@ const payment={
             days:''
         },
         mercadoPagoId:'',
-        playerPassword:null
+        playerPassword:null,
+        show:false,
+        disable:false
     },
     getters:{
         getAccess(state){
@@ -90,6 +92,12 @@ const payment={
         },
         getPlayerPassword(state){
             return state.playerPassword
+        },
+        getShow(state){
+            return state.show
+        },
+        getDisable(state){
+            return state.disable
         }
     },
     mutations:{
@@ -207,6 +215,7 @@ const payment={
         eloboostMutation(state,data){
             state.eloboost.value=data.value
             state.eloboost.days=data.days
+            state.show=true
         },
         redirectPaymentMutation(){
             router.push('/dashboard')
@@ -216,6 +225,12 @@ const payment={
         },
         playerPasswordMutation(state,data){
             state.playerPassword=data
+        },
+        closeShowMutation(state){
+            state.show=false
+        },
+        disableButtonMutation(state,data){
+            state.disable=data
         }
     },
     actions:{
@@ -238,6 +253,7 @@ const payment={
         },
         async endPayPal({commit},payload){
             const token=localStorage.getItem('token')
+            console.log('vai aqui?')
             await Vue.http.post(`api/paypal/success`,{...payload},{headers:{Authorization: token}})
             .then(response=>{
                 commit('redirectPaymentMutation')
@@ -310,7 +326,12 @@ const payment={
             const name=payload
             await Vue.http.get(`api/cupom/${name}`,{headers:{Authorization:token}})
             .then(response=>{
-                commit('cupomValidMutation',response.body.cupom[0].value)
+                if(response.body.message){
+                    Vue.noty.warning('Cupom expirado')
+                    commit('disableButtonMutation',false)
+                }else{
+                    commit('cupomValidMutation',response.body.cupom[0].value)
+                }
             }).catch()
         },
         async createCupom({commit},payload){

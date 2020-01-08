@@ -1,4 +1,4 @@
-s<template>
+<template>
     <div>
         <div v-if="formData.stage=='Ferro'">
             <img :src="require(`@/assets/iron/iron_${formData.level!='Selecione'? formData.level : 'IV'}.png`)" class="img-fluid center image-size">
@@ -19,10 +19,10 @@ s<template>
             <img :src="require(`@/assets/diamond/diamond_${formData.level!='Selecione'? formData.level : 'IV'}.png`)" class="img-fluid center image-size">
         </div>
         <div class="form-group">
-            <select class="custom-select mb-3" v-model="formData.stage">
+            <select class="custom-select mb-3" @change="sendDataName($event)" v-model="formData.stage">
                 <option v-for="element in boost.names" v-bind:key="element.state">{{element.state}}</option>
             </select>
-            <select class="custom-select" @change="sendData($event)" v-model="formData.level">
+            <select class="custom-select" @change="sendDataId($event)" v-model="formData.level">
                 <option v-for="position in boost.positions" v-bind:key="position.state">{{position.state}}</option>
             </select>
         </div>    
@@ -42,11 +42,16 @@ export default {
         }
     },
     methods:{
-        sendData(event){
+        sendDataName(event){
+            this.formData.stage=event.target.value;
+            // console.log(this.formData)
+            this.$emit('dataNome', event.target.value);
+        },
+        sendDataId(event){
             this.formData.level=event.target.value;
-            console.log(this.formData)
-            this.$emit('data', this.formData);
-        }
+            // console.log(this.formData)
+            this.$emit('dataId', event.target.value);
+        },
     },
 }
 </script>

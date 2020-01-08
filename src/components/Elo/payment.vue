@@ -177,9 +177,9 @@ export default {
     },
     methods: {
         validate(){
-            if(this.disable==false){
+            if(this.$store.getters.getDisable==false){
                 this.button='btn btn-secondary my-2 my-sm-0'
-                this.disable=true
+                this.$store.commit('disableButtonMutation',true)
                 this.$store.dispatch('useCupom',this.cupom)
             }
         },
