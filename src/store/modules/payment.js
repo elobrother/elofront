@@ -112,7 +112,7 @@ const payment={
             router.push('/pagamento')
         },
         ordersMutation(state,data){
-            state.orders=data
+            state.orders=data.filter(e=>{return e.paymentsStatus=='APROVADO'})
         },
         orderMutation(state,data){
             state.order=state.orders.filter(e=>{return e._id===data})
@@ -140,7 +140,7 @@ const payment={
         },
         updateOrders(state,data){
             state.isSearch=false
-            state.orders=data
+            state.orders=data.filter(e=>{return e.paymentsStatus!='AGUARDANDO'})
         },
         searchProductMutation(state,data){
             if(data!=''){
@@ -207,7 +207,8 @@ const payment={
         dropoutsMutation(state,data){
             if(data!=''){
                 state.isSearch=true
-                state.dropout_copy=state.dropout.filter(e=>{return e.user.name==data})
+                console.log(state.dropout)
+                state.dropout_copy=state.dropout.filter(e=>{return e.user.email==data})
             }else{
                 state.isSearch=false
             }

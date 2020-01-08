@@ -79,8 +79,6 @@ export default {
         orders(){
             // this.pedidos= this.$store.getters['getOrders']
             this.pedidos=Object.assign(this.$store.getters.getOrdersPrice) 
-            console.log('pedidos inicio')
-            console.log(this.$store.getters.getOrdersPrice)
             return this.$store.getters.getOrdersPrice
         }
     },
@@ -101,24 +99,16 @@ export default {
     created(){
         this.callOrders()
         this.orders
-        console.log('window shopper')
-        console.log(this.pedidos)
-        console.log('===========')
-        // this.orders    
     },
     mounted(){
         this.socket.on('orderUser', data => {
-            console.log('id da ordem '+data)
             this.$store.commit('updateOrders',data.updateOrder)
             // this.pedidos=data.updateOrder
         });
 
         this.socket.on('newOrder',data=>{
-            console.log(data)
             this.$store.commit('updateOrders',data)
             // this.pedidos=data
-            // console.log('pedidos')
-            // console.log(this.pedidos)
         })
     },
     destroyed(){

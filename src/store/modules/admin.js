@@ -27,7 +27,8 @@ const admin={
             dropouts:'',
             cupom:''
         },
-        ranking:{}
+        ranking:{},
+        ranking_copy:{}
     },
     getters:{
         getAdmin(state){
@@ -66,7 +67,11 @@ const admin={
             return state.counter
         },
         getRanking(state){
-            return state.ranking
+            if(state.isSearch){
+                return state.ranking_copy
+            }else{
+                return state.ranking
+            }
         }   
     },
     mutations:{
@@ -99,7 +104,7 @@ const admin={
         },
         searchUsersMutation(state,data){
             if(data.page=='player'){
-                if(data!=''){
+                if(data.name!=''){
                     state.isSearch=true
                     state.players_copy=state.players.filter(e=>{return e.name==data.name})
                 }else{
@@ -107,7 +112,7 @@ const admin={
                 }
             }
             if(data.page=='user'){
-                if(data!=''){
+                if(data.name!=''){
                     state.isSearch=true
                     state.user_copy=state.users.filter(e=>{return e.name==data.name})
                 }else{
@@ -148,6 +153,14 @@ const admin={
         removePlayerMutation(state,data){
             state.isSearch=false
             state.players=state.players.filter(e=>{return e._id!=data})
+        },
+        rankingSearchMutation(state,data){
+            if(data!=''){
+                state.isSearch=true
+                state.ranking_copy=state.ranking.filter(e=>{return e.name==data})
+            }else{
+                state.isSearch=false
+            }
         }
     },
     actions:{
@@ -242,6 +255,7 @@ const admin={
             const token=localStorage.getItem('token')
             Vue.http.get('api/admin/ranking',{headers:{Authorization: token}})
             .then(response=>{
+                console.log(response.body)
                 commit('rankingMutation',response.body.userPlayerRaking)
             }).catch()
         }

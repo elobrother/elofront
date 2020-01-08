@@ -53,7 +53,6 @@
 export default {
     data(){
         return{
-            load:false,
             element:'',
             hash:''
         }
@@ -66,7 +65,6 @@ export default {
     },
     methods:{
         search(){
-            this.load=true
             this.$store.commit('dropoutsMutation',this.element)
         },
         makeHash(index){

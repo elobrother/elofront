@@ -32,7 +32,7 @@
                     </table>
                 </div>
                 <div v-if="ranking.length==0">
-                    <p class="text-center">Ainda não há jogadores cadastrados</p>
+                    <p class="text-center">Esse jogador não existe</p>
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@ export default {
     },
     methods:{
         search(){
-            
+            this.$store.commit('rankingSearchMutation',this.element)
         }
     },
     created(){

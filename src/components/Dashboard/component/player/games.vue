@@ -96,20 +96,11 @@ export default {
     },
     mounted(){
         this.socket.on('orderStatus',data=>{
-            console.log(data)
-            console.log('==========')
-            console.log(this.matches)
             this.games.filter(e=>{
-                console.log('id aqui: '+e._id)
-                console.log('isso aqui: '+data.updateOrder)
                 if(e._id===data.updateOrder){
-                    console.log('entrou aqui')
-                    console.log('Aqui é o status via socket '+data.status)
                     return e.status=data.status
                 }
             })
-            console.log('Novo atual')
-            console.log(this.games)
         })
     },
      destroyed(){
