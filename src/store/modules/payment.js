@@ -15,6 +15,8 @@ const payment={
         orders:{},
         orders_copy:{},
         orders_copy_price:{},
+        orders_admin:{},
+        orders_admin_copy:{},
         games:{},
         games_copy:{},
         products:{},
@@ -45,9 +47,9 @@ const payment={
         },
         getOrders(state){
             if(state.isSearch){
-                return state.orders_copy
+                return state.orders_admin_copy
             }else{
-                return state.orders
+                return state.orders_admin
             }
         },
         getOrdersPrice(state){
@@ -114,6 +116,9 @@ const payment={
         ordersMutation(state,data){
             state.orders=data.filter(e=>{return e.paymentsStatus=='APROVADO'})
         },
+        ordersMutationPannel(state,data){
+            state.orders_admin=data
+        },
         orderMutation(state,data){
             state.order=state.orders.filter(e=>{return e._id===data})
         },
@@ -145,7 +150,7 @@ const payment={
         searchProductMutation(state,data){
             if(data!=''){
                 state.isSearch=true
-                state.orders_copy=state.orders.filter(e=>{return e.code==data.toUpperCase()})
+                state.orders_admin_copy=state.orders_admin.filter(e=>{return e.code==data.toUpperCase()})
                 // if(state.orders_copy.length==0){
                 //    state.orders_copy=state.orders
                 // }
@@ -293,7 +298,7 @@ const payment={
             const token=localStorage.getItem('token')
             await Vue.http.get('api/order/',{headers:{Authorization: token}})
             .then(response=>{
-                commit('ordersMutation',response.body)
+                commit('ordersMutationPannel',response.body)
             }).catch(err=>{Vue.noty.error('Ocorreu um erro ao buscar os dados!')})
         },
         async getAllOrders({commit}){

@@ -132,6 +132,7 @@ export default {
             this.show=true
         },
         confirm(){
+            this.formData.description=`Último Elo: ${this.formData.description} | Qtd de vitórias: ${this.sliderValue}`
             this.$store.commit('confirmOrderMutation',this.formData)
             this.show=false
         }

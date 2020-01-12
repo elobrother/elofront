@@ -3,7 +3,12 @@
 
         <Modal :data="formData" />
 
-        <div class="container">
+        <div v-if="this.$store.getters.getShowElocoach">
+            <div class="spinner-border text-success center-img" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div> 
+        <div v-else class="container">
             <div class="row margin-top-160">
                 <div class="col">
                     <h1 class="text-center text-information">Escolha um dos nossos pacotes</h1>
@@ -191,7 +196,7 @@ export default {
             aula1:'1',
             aula2:'1',
             aula3:'1',
-            display:localStorage.getItem('id')
+            display:localStorage.getItem('id'),
         }
     },
     components:{

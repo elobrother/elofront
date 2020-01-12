@@ -64,9 +64,13 @@
         },
         methods:{
             page(element){
-                this.$store.commit('logadoMutation')
-                // this.$store.commit('goToElosPageMutation',element)  
-                router.push(`/${element}`)
+                const status=localStorage.getItem('mdfkwe_r')
+                if(status=='JOGADOR'){
+                    this.$noty.warning('Jogador não pode comprar serviço')
+                }else{
+                    this.$store.commit('logadoMutation')
+                    router.push(`/${element}`)
+                }
             }
         }
     }

@@ -8,6 +8,7 @@ const config={
         header:true,
         footer:true,
         elocoach:{},
+        loading:true
     },
     getters:{
         getEloStatus(state){
@@ -22,6 +23,9 @@ const config={
         getEloCoach(state){
             return state.elocoach
         },
+        getShowElocoach(state){
+            return state.loading
+        }
     },
     mutations:{
         changeStatusMutation(state,data){
@@ -45,6 +49,7 @@ const config={
             router.push('/servicos')
         },
         elocoachMutation(state,data){
+            state.loading=false
             state.elocoach=data.filter(e=>{return e.type=='elocoach'})
         },
         logadoMutation(state){
