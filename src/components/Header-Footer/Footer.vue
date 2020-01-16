@@ -16,7 +16,7 @@
                 </div>
                 <div class="row space-top">
                     <div class="col">
-                        <p class="text-center">Todos os direitos reservados ELOBROTHER &copy; 2019 </p>
+                        <p class="text-center">Todos os direitos reservados ELOBROTHER &copy; 2019-2020 </p>
                     </div>   
                 </div>
             </div>
