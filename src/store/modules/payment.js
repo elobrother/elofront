@@ -15,6 +15,7 @@ const payment={
         orders:{},
         orders_copy:{},
         orders_copy_price:{},
+        order_admin:{},
         orders_admin:{},
         orders_admin_copy:{},
         games:{},
@@ -43,7 +44,7 @@ const payment={
             return state.formData
         },
         getOneOrder(state){
-            return state.order
+            return state.order_admin
         },
         getOrders(state){
             if(state.isSearch){
@@ -118,6 +119,9 @@ const payment={
         },
         ordersMutationPannel(state,data){
             state.orders_admin=data
+        },
+        orderMutationFilterPannel(state,data){
+            state.order_admin=state.orders_admin.filter(e=>{return e._id===data})
         },
         orderMutation(state,data){
             state.order=state.orders.filter(e=>{return e._id===data})

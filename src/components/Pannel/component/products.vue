@@ -70,7 +70,6 @@ export default {
         orders(){
             this.load=false
             this.total=this.$store.getters['getOrders']
-            console.log(this.total)
             return this.$store.getters['getOrders']
         }
     },
@@ -79,7 +78,7 @@ export default {
             this.$store.commit('searchProductMutation',this.element)
         },
         seeProduct(id){
-            this.$store.commit('orderMutation',id)
+            this.$store.commit('orderMutationFilterPannel',id)
         }
     },
     created(){
