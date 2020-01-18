@@ -24,6 +24,7 @@
                             <option value="#">Selecione</option>
                             <option value="eloboost">ELOBOOST</option>
                             <option value="elocoach">ELOCOACH</option>
+                            <option value="md10">MD10</option>
                         </select>
                     </div>
                 </div>
@@ -32,12 +33,23 @@
                 <div class="col">
                     <div v-if="elo==='eloboost'" class="form-group">
                         <select class="custom-select mb-2" v-model="formData.name">
-                            <option key="ferro">Ferro</option>
-                            <option key="bronze">Bronze</option>
-                            <option key="prata">Prata</option>
-                            <option key="ouro">Ouro</option>
-                            <option key="platina">Platina</option>
-                            <option key="diamante">Diamante</option>
+                            <option value="ferro">Ferro</option>
+                            <option value="bronze">Bronze</option>
+                            <option value="prata">Prata</option>
+                            <option value="ouro">Ou ro</option>
+                            <option value="platina">Platina</option>
+                            <option value="diamante">Diamante</option>
+                        </select>
+                    </div>
+                    <div v-else-if="elo==='md10'" class="form-group">
+                        <select class="custom-select mb-2" v-model="formData.name">
+                            <option value="unrankedmd10">Unranked</option>
+                            <option value="ferromd10">Ferro</option>
+                            <option value="bronzemd10">Bronze</option>
+                            <option value="pratamd10">Prata</option>
+                            <option value="ouromd10">Ouro</option>
+                            <option value="platinamd10">Platina</option>
+                            <option value="diamantemd10">Diamante</option>
                         </select>
                     </div>
                     <div v-else-if="elo=='elocoach'" class="form-group">
@@ -49,7 +61,16 @@
                     </div>
                     <div v-else class="form-group">
                         <select class="custom-select mb-2">
-                            <option>Selecione o Elo primeiro</option>
+                            <option value="#">Selecione o Elo primeiro</option>
+                        </select>
+                    </div>
+                    <div v-if="elo=='eloboost'" class="form-group">
+                        <select class="custom-select mb-2" v-model="position">
+                            <option value="#">Selecione a posição</option>
+                            <option value="IV">IV</option>
+                            <option value="III">III</option>
+                            <option value="II">II</option>
+                            <option value="I">I</option>
                         </select>
                     </div>
                 </div>
@@ -82,6 +103,7 @@ export default {
                 value:''
             },
             elo:'',
+            position:'#'
         }
     },
     components:{
@@ -90,16 +112,26 @@ export default {
     methods: {
         update(event){
             this.elo=event.target.value
-            console.log(this.elo)
             this.formData.name=''
         },
         salvar(){
             if(this.formData.name==''||this.formData.name==''||this.formData.value==''){
                 this.$noty.warning('Não pode haver campos vazios')
             }else{
-                this.$store.dispatch('updatePrice',this.formData)
-                this.formData={name:'Selecione',value:''}
-                this.elo='#'
+                if(this.elo=='eloboost'){
+                    if(this.position!='#'){
+                        this.formData.name=`${this.formData.name}${this.position}`
+                        this.$store.dispatch('updatePrice',this.formData)
+                        this.formData={name:'#',value:''}
+                        this.elo=this.position='#'
+                    }else{
+                        this.$noty.warning('Selecione a posição do elo')
+                    }
+                }else{
+                    this.$store.dispatch('updatePrice',this.formData)
+                    this.formData={name:'#',value:''}
+                    this.elo=this.position='#'
+                }
             }
         },
     },
