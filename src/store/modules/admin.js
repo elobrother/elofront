@@ -144,11 +144,7 @@ const admin={
             state.counter.dropouts=data.droputs
         },
         rankingMutation(state,data){
-            state.ranking=data.sort((a,b)=>{
-                if(a.pedidos== b.pedidos){ return 0}
-                if(a.pedidos< b.pedidos){ return -1}
-                if(a.pedidos> b.pedidos){ return 1}
-            })
+            state.ranking=data.sort(function(a,b){b-a})
         },
         removePlayerMutation(state,data){
             state.isSearch=false
@@ -223,6 +219,7 @@ const admin={
             const token=localStorage.getItem('token')
             Vue.http.put(`api/elos/`,{...payload},{headers:{Authorization: token}})
             .then(response=>{
+                Vue.noty.success(response.body.message)
             }).catch()
         },
         allPrice({commit},payload){
@@ -255,7 +252,6 @@ const admin={
             const token=localStorage.getItem('token')
             Vue.http.get('api/admin/ranking',{headers:{Authorization: token}})
             .then(response=>{
-                console.log(response.body)
                 commit('rankingMutation',response.body.userPlayerRaking)
             }).catch()
         }

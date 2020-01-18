@@ -36,7 +36,7 @@ export default {
             return this.$store.getters['getPrices']
         }
     },
-    beforeCreate(){
+    mounted(){
         this.$store.dispatch('allPrice')
     }
 }

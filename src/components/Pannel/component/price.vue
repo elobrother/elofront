@@ -33,16 +33,18 @@
                 <div class="col">
                     <div v-if="elo==='eloboost'" class="form-group">
                         <select class="custom-select mb-2" v-model="formData.name">
+                            <option value="#">Selecione o elo</option>
                             <option value="ferro">Ferro</option>
                             <option value="bronze">Bronze</option>
                             <option value="prata">Prata</option>
-                            <option value="ouro">Ou ro</option>
+                            <option value="ouro">Ouro</option>
                             <option value="platina">Platina</option>
                             <option value="diamante">Diamante</option>
                         </select>
                     </div>
                     <div v-else-if="elo==='md10'" class="form-group">
                         <select class="custom-select mb-2" v-model="formData.name">
+                            <option value="#">Selecione o elo</option>
                             <option value="unrankedmd10">Unranked</option>
                             <option value="ferromd10">Ferro</option>
                             <option value="bronzemd10">Bronze</option>
@@ -54,6 +56,7 @@
                     </div>
                     <div v-else-if="elo=='elocoach'" class="form-group">
                         <select class="custom-select mb-2" v-model="formData.name">
+                            <option value="#">Selecione o nível</option>
                             <option value="bronzecoach">Bronze</option>
                             <option value="platinacoach">Platina</option>
                             <option value="diamanteelocoach">Diamante</option>
@@ -99,7 +102,7 @@ export default {
     data(){
         return{
             formData:{
-                name:'',
+                name:'#',
                 value:''
             },
             elo:'',
@@ -112,10 +115,10 @@ export default {
     methods: {
         update(event){
             this.elo=event.target.value
-            this.formData.name=''
+            this.formData.name='#'
         },
         salvar(){
-            if(this.formData.name==''||this.formData.name==''||this.formData.value==''){
+            if(this.formData.name=='#'||this.formData.name==''||this.formData.value==''){
                 this.$noty.warning('Não pode haver campos vazios')
             }else{
                 if(this.elo=='eloboost'){
