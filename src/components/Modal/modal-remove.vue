@@ -16,7 +16,7 @@
                             <button class="btn btn-block btn-danger" data-dismiss="modal">Cancelar</button>
                         </div>
                         <div class="col-4">
-                            <button class="btn btn-block btn-success" data-dismiss="modal" @click="remove()">Excluir</button>
+                            <button class="btn btn-block btn-success" data-dismiss="modal" @click="remove(id)">Excluir</button>
                         </div>
                     </div>
                 </div>    
@@ -29,6 +29,7 @@
 <script>
 
 export default {
+    props:['id'],
     data(){
         return {
 
@@ -36,6 +37,7 @@ export default {
     },
     methods:{
         remove(id){
+            console.log('id: '+id)
             this.$store.dispatch('removeOrder',id)
         }
     }
