@@ -247,7 +247,7 @@ const payment={
             state.disable=data
         },
         removeOrderMutation(state,data){
-            state.orders_admin=orders_admin.filter(e=>{return e._id==data})
+            state.orders_admin=state.orders_admin.filter(e=>{return e._id!=data})
         }
     },
     actions:{
@@ -460,10 +460,20 @@ const payment={
             const token=localStorage.getItem('token')
             await Vue.http.delete(`api/order/${id}`,{headers:{Authorization: token}})
             .then(response=>{
+                Vue.noty.success('Pedido removido')
                 commit('removeOrderMutation',id)
             })
+        },
+        async updateStatusPayment({commit},payload){
+            const id=payload.id
+            const status=payload.status
+            const token=localStorage.getItem('token')
+            await Vue.http.put(`api/order/updatePaymentStatus/${id}`,{status},{headers:{Authorization: token}})
+            .then(response=>{
+                Vue.noty.success('Status de pagamento atualizado!')
+                // commit('removeOrderMutation',id)
+            })
         }
-        
     }
 }
 

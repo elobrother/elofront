@@ -1,5 +1,7 @@
 <template>
     <div>
+        <Atualizar :id="id" />
+
         <div class="modal fade" id="detalhe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false" data-backdrop="static">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -43,6 +45,12 @@
                       <span class="btn btn-block btn-danger cursor" @click="refund(product._id)">Refund</span>
                     </div>
                   </div>
+
+                  <div class="row justify-content-center mt-3">
+                    <div class="col-10">
+                      <button class="btn btn-primary btn-block" data-toggle="modal" data-dismiss="modal" data-target="#atualizarPedido" @click="getId(product._id)">Atualizar</button>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -51,6 +59,8 @@
 </template>
 
 <script>
+import Atualizar from './modal-atualizar-pedido.vue'
+
 export default {
     data(){
         return {
@@ -59,8 +69,12 @@ export default {
             orderCode:'',
             motivo:'',
             cliente:false,
-            admin:false
+            admin:false,
+            id:''
         }
+    },
+    components:{
+      Atualizar
     },
     computed:{
       product(){
@@ -91,6 +105,9 @@ export default {
       refund(orderId){
         console.log(orderId)
         this.$store.dispatch('goRefund',orderId)
+      },
+      getId(id){
+        this.id=id
       }
     },
     destroyed(){
