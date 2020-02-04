@@ -245,6 +245,9 @@ const payment={
         },
         disableButtonMutation(state,data){
             state.disable=data
+        },
+        removeOrderMutation(state,data){
+            state.orders_admin=orders_admin.filter(e=>{return e._id==data})
         }
     },
     actions:{
@@ -451,6 +454,14 @@ const payment={
                     commit('playerPasswordMutation',response.body.playerPassword)
                 })
             }
+        },
+        async removeOrder({commit},payload){
+            const id=payload
+            const token=localStorage.getItem('token')
+            await Vue.http.delete(`api/order/${id}`,{headers:{Authorization: token}})
+            .then(response=>{
+                commit('removeOrderMutation',id)
+            })
         }
         
     }

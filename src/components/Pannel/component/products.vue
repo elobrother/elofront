@@ -2,6 +2,8 @@
     <div>
         <Detail :status=status />
 
+        <Delete :id=id />
+
         <div class="row">
             <div class="col">
                 <h3 class="text-center text-information">Pedidos</h3>
@@ -22,6 +24,7 @@
                                 <th scope="col">Valor</th>
                                 <th scope="col">Código</th>
                                 <th scope="col">Ação</th>
+                                <th scope="col">Excluir</th>
                             </tr>
                         </thead>
                         <tbody v-if="!load" >
@@ -30,6 +33,7 @@
                                 <td>R$ {{order.valor}}</td>
                                 <td>{{order.code}}</td>
                                 <td><button class="btn btn-primary" data-toggle="modal" data-target="#detalhe" @click="seeProduct(order._id)">Detalhes</button></td>
+                                <td><button class="btn btn-danger" data-toggle="modal" data-target="#remove" @click="removeProduct(order._id)"><i class="fas fa-trash"></i></button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -53,6 +57,7 @@
 
 <script>
 import Detail from '../../Modal/modal-product.vue'; 
+import Delete from '../../Modal/modal-remove.vue'; 
 
 export default {
     data(){
@@ -61,10 +66,12 @@ export default {
             load:false,
             total:null,
             element:'',
+            id:''
         }
     },
     components:{
-        Detail
+        Detail,
+        Delete
     },
     computed:{
         orders(){
@@ -79,7 +86,11 @@ export default {
         },
         seeProduct(id){
             this.$store.commit('orderMutationFilterPannel',id)
-        }
+        },
+        removeProduct(id){
+            this.id=id
+            // this.$store.commit('orderMutationFilterPannel',id)
+        },
     },
     created(){
         this.$store.dispatch('getAllOrdersPannel')
