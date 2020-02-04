@@ -51,7 +51,7 @@ export default {
     },
     computed:{
         order(){
-            let order= this.$store.getters['getOneOrder']
+            let order= this.$store.getters['getOneOrderProduct']
             return order[0]
         }
     },

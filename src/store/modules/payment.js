@@ -46,6 +46,9 @@ const payment={
         getOneOrder(state){
             return state.order_admin
         },
+        getOneOrderProduct(state){
+            return state.order
+        },
         getOrders(state){
             if(state.isSearch){
                 return state.orders_admin_copy
@@ -125,6 +128,7 @@ const payment={
         },
         orderMutation(state,data){
             state.order=state.orders.filter(e=>{return e._id===data})
+            console.log(state.order)
         },
         gamesMutation(state,data){
             state.games=data
