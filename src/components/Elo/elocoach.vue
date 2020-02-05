@@ -204,7 +204,6 @@ export default {
     },
     computed: {
         getValor(){
-            console.log(this.$store.getters['getEloCoach'])
             return this.$store.getters['getEloCoach']
         }
     },

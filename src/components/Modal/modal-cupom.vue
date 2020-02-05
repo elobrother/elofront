@@ -79,7 +79,6 @@ export default {
                 if(moment(this.today).isAfter(this.day)){
                     this.$noty.warning('O dia escolhido já passou!')
                 }else{
-                    console.log(this.day+' '+this.today)
                     this.$store.dispatch('createCupom',this.formData)
                 }
             }

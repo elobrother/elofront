@@ -84,7 +84,6 @@ export default {
     },
     methods: {
         seeJob(id){
-            console.log(id)
             this.$store.commit('orderMutation',id)
         },
         async callOrders(){

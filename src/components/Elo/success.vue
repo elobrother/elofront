@@ -41,7 +41,6 @@ export default {
         this.token=this.$route.query.token
         this.payerid=this.$route.query.PayerID
         const data={'paymentId':this.query,'payerId':this.payerid}
-        console.log(data)
         this.$store.dispatch('endPayPal',data)
         // setTimeout(()=>{
         //     router.push('/dashboard')

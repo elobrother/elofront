@@ -128,7 +128,6 @@ const payment={
         },
         orderMutation(state,data){
             state.order=state.orders.filter(e=>{return e._id===data})
-            console.log(state.order)
         },
         gamesMutation(state,data){
             state.games=data
@@ -220,7 +219,6 @@ const payment={
         dropoutsMutation(state,data){
             if(data!=''){
                 state.isSearch=true
-                console.log(state.dropout)
                 state.dropout_copy=state.dropout.filter(e=>{return e.user.email==data})
             }else{
                 state.isSearch=false
@@ -270,7 +268,6 @@ const payment={
         },
         async endPayPal({commit},payload){
             const token=localStorage.getItem('token')
-            console.log('vai aqui?')
             await Vue.http.post(`api/paypal/success`,{...payload},{headers:{Authorization: token}})
             .then(response=>{
                 commit('redirectPaymentMutation')

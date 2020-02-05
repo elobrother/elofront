@@ -100,7 +100,6 @@ export default {
     computed: {
         user(){
             const elements=this.$store.getters['getUser'];
-            console.log(elements)
             this.formData={name:elements.name,email:elements.email,phoneNumber:elements.phoneNumber}
             if(elements.bankAccount){
                 this.bank={

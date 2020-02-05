@@ -44,12 +44,10 @@ export default {
     methods:{
         sendDataName(event){
             this.formData.stage=event.target.value;
-            // console.log(this.formData)
             this.$emit('dataNome', event.target.value);
         },
         sendDataId(event){
             this.formData.level=event.target.value;
-            // console.log(this.formData)
             this.$emit('dataId', event.target.value);
         },
     },

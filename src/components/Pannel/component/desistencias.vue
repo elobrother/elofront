@@ -59,7 +59,6 @@ export default {
     },
     computed:{
         dropout(){
-            console.log(this.$store.getters['getDropout'])
             return this.$store.getters['getDropout']
         }
     },

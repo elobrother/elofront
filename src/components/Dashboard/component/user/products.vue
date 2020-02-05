@@ -113,19 +113,11 @@ export default {
     },
     mounted(){
         this.socket.on('orderStatus',data=>{
-            console.log(data)
-            console.log('==========')
-            console.log(this.myProducts)
             this.myProducts=this.myProducts.filter(e=>{
-                console.log('id aqui: '+e._id)
-                console.log('isso aqui: '+data.updateOrder)
                 if(e._id===data.updateOrder){
-                    console.log('entrou aqui')
                     return e.status=data.status
                 }
             })
-            console.log('Novo atual')
-            console.log(this.myProducts)
         })
     },
     destroyed(){

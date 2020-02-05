@@ -103,7 +103,6 @@ export default {
         }
       },
       refund(orderId){
-        console.log(orderId)
         this.$store.dispatch('goRefund',orderId)
       },
       getId(id){

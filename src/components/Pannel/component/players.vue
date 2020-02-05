@@ -77,14 +77,6 @@ export default {
     },
     methods:{
         search(){
-            // if(this.element=='nome'){
-            //     this.formData.name=''
-            // }
-            // if(this.element=='email'){
-
-            // }
-            
-            // console.log(this.element)
             this.$store.commit('searchUsersMutation',this.formData)
         },
         seePlayer(id){

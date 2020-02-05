@@ -32,7 +32,6 @@ export default {
     },
     computed:{
         allPrices(){
-            console.log(this.$store.getters['getPrices'])
             return this.$store.getters['getPrices']
         }
     },

@@ -118,14 +118,11 @@ import router from '../../routes';
         },
         computed:{
             authorization(){
-                console.log('refresh')
-                console.log(this.$store.getters.getToken)
                 return this.$store.getters.getToken
             }
         },
         methods:{
             select(element){
-                console.log(element)
                 switch(element){
                     case 'usuarios':
                         this.usuarios=true
@@ -183,10 +180,6 @@ import router from '../../routes';
             this.$store.commit("changeStatusFooter",false)
             this.$store.commit("changeStatusHeader",false)
         },
-        // beforeDestroy(){
-        //     this.$store.commit("changeStatusFooter",true)
-        //     this.$store.commit("changeStatusHeader",true)
-        // },
         destroyed(){
             this.$store.commit("changeStatusFooter",true)
             this.$store.commit("changeStatusHeader",true)

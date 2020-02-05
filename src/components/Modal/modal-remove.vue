@@ -37,7 +37,6 @@ export default {
     },
     methods:{
         remove(id){
-            console.log('id: '+id)
             this.$store.dispatch('removeOrder',id)
         }
     }
