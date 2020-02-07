@@ -95,7 +95,7 @@ export default {
         }
     },
     created(){
-        this.$store.dispatch('allRealotry')
+        this.$store.dispatch('allRelatory')
     }
     
 }

@@ -93,7 +93,7 @@ export default {
         },
     },
     created(){
-        this.$store.dispatch('getAllOrdersPannel')
+        this.$store.dispatch('getAllOrdersPannel');
     },
     destroyed(){
         this.$store.commit('changeSeachMutation')

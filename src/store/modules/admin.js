@@ -28,7 +28,8 @@ const admin={
             cupom:''
         },
         ranking:{},
-        ranking_copy:{}
+        ranking_copy:{},
+        playerName:''
     },
     getters:{
         getAdmin(state){
@@ -72,6 +73,9 @@ const admin={
             }else{
                 return state.ranking
             }
+        },
+        getPlayerName(state){
+            return state.playerName
         }   
     },
     mutations:{
@@ -157,6 +161,9 @@ const admin={
             }else{
                 state.isSearch=false
             }
+        },
+        getPlayerNameMutation(state,data){
+            state.playerName=data
         }
     },
     actions:{
@@ -239,7 +246,7 @@ const admin={
                 }).catch()
             }
         },
-        allRealotry({commit}){
+        allRelatory({commit}){
             const id=localStorage.getItem('id')
             const token=localStorage.getItem('token')
             Vue.http.get('api/admin/getAll/count',{headers:{Authorization: token}})
@@ -253,6 +260,15 @@ const admin={
             Vue.http.get('api/admin/ranking',{headers:{Authorization: token}})
             .then(response=>{
                 commit('rankingMutation',response.body.userPlayerRaking)
+            }).catch()
+        },
+        getPlayer({commit},payload){
+            const id=payload
+            const token=localStorage.getItem('token')
+            Vue.http.get(`api/user/${id}`,{headers:{Authorization: token}})
+            .then(response=>{
+                console.log(response)
+                commit('getPlayerNameMutation',response.body.user)
             }).catch()
         }
     }
