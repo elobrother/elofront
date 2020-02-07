@@ -21,7 +21,7 @@
                         <h4><span class="color-modal">Valor: </span> <span class="text-modal-detail">R$ {{product.valor}}</span></h4>
                         <h4><span class="color-modal">Descrição: </span> <span class="text-modal-detail">{{product.description}}</span></h4>
                         <button class="btn btn-primary" @click="seeName(product.userPlayer)">Ver Nome jogador</button>
-                        <h4 v-if="admin && playerName"><span class="color-modal">Jogador: </span> <span class="text-modal-detail">{{product.playerName ? playerName[0].name : 'Sem jogador' }}</span></h4>
+                        <h4 v-if="admin && playerName"><span class="color-modal">Jogador: </span> <span class="text-modal-detail">{{product.playerName ? playerName[0].names : 'Sem jogador' }}</span></h4>
                       </div>
                     </div> 
                   </div>
