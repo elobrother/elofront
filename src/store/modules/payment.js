@@ -250,6 +250,9 @@ const payment={
     },
     actions:{
         //payment
+        resetPassword({commit}) {
+            commit('playerPasswordMutation', null)
+        },
         async callPaypal({commit},payload){
             const token=localStorage.getItem('token')
             let id=''
@@ -445,12 +448,10 @@ const payment={
         },
         async requestUserData({commit,state},payload){
             const token=localStorage.getItem('token')
-            if(state.playerPassword==null){
                 await Vue.http.post('api/order/getPlayer/Password',{orderId:payload},{headers:{Authorization: token}})
                 .then(response=>{
                     commit('playerPasswordMutation',response.body.playerPassword)
                 })
-            }
         },
         async removeOrder({commit},payload){
             const id=payload

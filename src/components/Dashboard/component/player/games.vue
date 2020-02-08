@@ -32,7 +32,7 @@
                                 <td>{{game.status}}</td>
                                 <td>{{game.valor}}</td>
                                 <td v-if="game.status=='CONCLUIDO'"><button class="btn btn-secondary">Concluido</button></td>
-                                <td v-else><button class="btn btn-primary" data-toggle="modal" data-target="#detalhe" @click="changeStatus(game._id,game.playerName,game.playerPassword,game.status)">{{btntext}}</button></td>
+                                <td v-else><button class="btn btn-primary" data-toggle="modal" data-target="#detalhe" @click="changeStatus(game._id,game.playerName,game,game.status)">{{btntext}}</button></td>
                                 <td v-if="game.status!='CONCLUIDO'"><button class="btn btn-danger" data-toggle="modal" data-target="#desistir" @click="dropService(game._id)">Desistir</button></td>
                                 <td v-else><button class="btn btn-secondary">Desistir</button></td>
                             </tr>

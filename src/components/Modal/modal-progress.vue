@@ -5,13 +5,14 @@
             <div class="modal-content">
               <div class="modal-header">
                     <h5 class="modal-title" id="TituloModalLongoExemplo">Dados do jogador</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <button type="button" class="close" data-dismiss="modal" @click="close()" aria-label="Fechar">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
               <div class="modal-body">
                   <div class="row mb-3">
                       <div class="col">
+                          <h4>Detalhe do pedido:  <h5 style="color:red">{{playerPassword.description}}</h5> </h4>
                         <!-- <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="customCheck1"  v-model="check1" value="Chat Offline">
                             <label class="custom-control-label" for="customCheck1"><span class="text-modal-detail">Ver Login e Senha do usuário</span></label>
@@ -76,10 +77,16 @@ export default {
                 this.$store.dispatch('requestUserData',this.id)
                 this.check1=true
                 this.btnText='Esconder dados'
+                console.log(this)
             }else{
                 this.btnText='Obter senha do usuário no LoL'
                 this.check1=false
-            }
+            } 
+        },
+        close(){
+            this.btnText='Obter senha do usuário no LoL'
+            this.check1=false
+            this.$store.dispatch('resetPassword')
         }
     }
 }
