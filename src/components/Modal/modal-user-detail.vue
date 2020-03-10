@@ -40,6 +40,7 @@ export default {
     },
     computed:{
         person(){
+            console.log(this.$store.getters['getOneUser'])
             return this.$store.getters['getOneUser']
         }
     },
