@@ -35,7 +35,7 @@ const admin={
         getAdmin(state){
             return state.formData
         },
-        getAllUsers(state){
+        getAllUsers(state) {
             if(state.isSearch){
                 return state.user_copy
             }else{
@@ -43,6 +43,7 @@ const admin={
             }
         },
         getOneUser(state){
+            console.log(state.oneUser);
             return state.oneUser
         },
         getAllPlayers(state){
@@ -163,7 +164,7 @@ const admin={
             }
         },
         getPlayerNameMutation(state,data){
-            state.playerName=data
+            state.playerName=data;
         }
     },
     actions:{
@@ -267,7 +268,6 @@ const admin={
             const token=localStorage.getItem('token')
             Vue.http.get(`api/user/${id}`,{headers:{Authorization: token}})
             .then(response=>{
-                console.log(response)
                 commit('getPlayerNameMutation',response.body.user)
             }).catch()
         }

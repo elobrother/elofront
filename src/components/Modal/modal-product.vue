@@ -21,7 +21,12 @@
                         <h4><span class="color-modal">Valor: </span> <span class="text-modal-detail">R$ {{product.valor}}</span></h4>
                         <h4><span class="color-modal">Descrição: </span> <span class="text-modal-detail">{{product.description}}</span></h4>
                         <button class="btn btn-primary" @click="seeName(product.userPlayer)">Ver Nome jogador</button>
-                        <h4 v-if="admin && playerName"><span class="color-modal">Jogador: </span> <span class="text-modal-detail">{{product.playerName ? playerName[0].names : 'Sem jogador' }}</span></h4>
+                        <h4 v-if="admin && playerName && allowed">
+                          <span class="color-modal">Jogador: </span>
+                          <span class="text-modal-detail">
+                            {{product.playerName ? playerName[0].name : 'Sem jogador' }}
+                          </span>
+                        </h4>
                       </div>
                     </div> 
                   </div>
@@ -74,7 +79,8 @@ export default {
             admin:false,
             id:'',
             player:'',
-            playerId:null
+            playerId:null,
+            allowed: false
         }
     },
     components:{
@@ -82,16 +88,18 @@ export default {
     },
     computed:{
       product(){
+        this.allowed = false;
         if(localStorage.getItem('mdfkwe_r')=='CLIENTE'){
-          this.cliente=true;
+          this.cliente = true;
           let order= this.$store.getters['getOneProduct']
-          return order[0] || ''
+          return order[0] || '';
         }
         if(localStorage.getItem('mdfkwe_r')=='ADMIN'){
-          this.admin=true;
+          this.admin = true;
           let order= this.$store.getters['getOneOrder']
-          return order[0] || ''
+          return order[0] || '';
         }
+        return false;
       },
       playerName(){
         return this.$store.getters['getPlayerName'];
@@ -102,10 +110,10 @@ export default {
         this.cancel=false
       },
       confirm(code){
-        if(this.motivo==''){
+        if(this.motivo == '') {
           this.$noty.warning('Nos informe o motivo!')
         }else{
-          const data={'description':this.motivo,'orderCode':code,'email':localStorage.getItem('email')}
+          const data = {'description':this.motivo,'orderCode':code,'email':localStorage.getItem('email')}
           this.$store.dispatch('cancelOrder',data)
         }
       },
@@ -113,16 +121,18 @@ export default {
         this.$store.dispatch('goRefund',orderId)
       },
       getId(id){
-        this.id=id
+        this.id = id
       },
       seeName(id){
+        this.allowed = true;
         this.$store.dispatch('getPlayer',id)
       }
     },
     destroyed(){
       this.motivo=''
-      this.cliente=false
-      this.admin=false
+      this.allowed = false;
+      this.cliente = false
+      this.admin = false
     }
 }
 </script>
