@@ -82,6 +82,7 @@ export default {
             playerId:null,
             allowed: false
         }
+        playerName();
     },
     components:{
       Atualizar
