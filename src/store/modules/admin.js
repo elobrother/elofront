@@ -264,6 +264,7 @@ const admin={
             }).catch()
         },
         getPlayer({commit},payload){
+            commit(`getPlayerNameMutation`, '');
             const id=payload
             const token=localStorage.getItem('token')
             Vue.http.get(`api/user/${id}`,{headers:{Authorization: token}})

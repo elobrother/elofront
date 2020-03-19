@@ -2,15 +2,15 @@
     <div class="fundo">
         <div id="services" class=" green-screen">
             <div class="container">
-                <div class="row space-bottom space-top" v-scroll-reveal.reset={delay:250}>
+                <div class="row space-bottom space-top">
                     <div class="col">
-                        <p class="text-center mt-5 white-text">Serviços</p>
-                        <hr class="underline-white"/>
+                        <p class="text-center mt-5 black-text">Serviços</p>
+                        <hr class="underline-black"/>
                     </div>
                 </div>
                 <div class="row justify-content-around">
                     <div class="col-sm-4 col-md-4">
-                        <div class="border-card shadow-sm shadow-hover" v-scroll-reveal.reset={delay:350}>
+                        <div class="border-card shadow-sm shadow-hover">
                             <div class="card-body">
                                 <h4 class="card-title text-center text-modal-detail">ELOBOOST</h4>
                                 <div class="mb-4 height-card">
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="col-sm-4 col-md-4">
-                        <div class="border-card shadow-sm shadow-hover" v-scroll-reveal.reset={delay:450}>
+                        <div class="border-card shadow-sm shadow-hover">
                             <div class="card-body">
                                 <h4 class="card-title text-center text-modal-detail">MD10</h4>
                                 <div class="mb-4 height-card">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="col-sm-4 col-md-4">
-                        <div class="border-card shadow-sm shadow-hover" v-scroll-reveal.reset={delay:550}>
+                        <div class="border-card shadow-sm shadow-hover" >
                         <div class="card-body">
                             <h4 class="card-title text-center text-modal-detail">ELOCOACH</h4>
                             <div class=" mb-4 height-card">

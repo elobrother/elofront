@@ -24,7 +24,7 @@
                         <h4 v-if="admin && playerName && allowed">
                           <span class="color-modal">Jogador: </span>
                           <span class="text-modal-detail">
-                            {{product.playerName ? playerName[0].name : 'Sem jogador' }}
+                            {{ playerName ? playerName[0].name  : 'Sem jogador' }}
                           </span>
                         </h4>
                       </div>
@@ -78,11 +78,11 @@ export default {
             cliente:false,
             admin:false,
             id:'',
-            player:'',
+            player:false,
             playerId:null,
-            allowed: false
+            allowed: false,
+            teste: ''
         }
-        playerName();
     },
     components:{
       Atualizar
@@ -124,7 +124,7 @@ export default {
       getId(id){
         this.id = id
       },
-      seeName(id){
+      async seeName(id) {
         this.allowed = true;
         this.$store.dispatch('getPlayer',id)
       }

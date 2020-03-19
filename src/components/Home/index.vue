@@ -1,19 +1,17 @@
 <template>
-  <div>
-        <comp-home/>
+  <div> 
+        <Modal />
         <comp-services/>
-        <comp-about/>
         <comp-info/>
         <comp-contact/>
   </div>
 </template>
 
 <script>
-import compHome from './home.vue';
 import compServices from './services.vue';
-import compAbout from './about.vue';
 import compInfo from './info.vue';
 import compContact from './contact.vue';
+import Modal from '../Modal/modal-info.vue';
 
 export default {
   data(){
@@ -23,11 +21,10 @@ export default {
   },
   name:'index',
   components: {
-    compHome,
     compServices,
-    compAbout,
     compInfo,
-    compContact
+    compContact,
+    Modal
   },
   methods: {
     close(){

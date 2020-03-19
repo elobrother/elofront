@@ -34,7 +34,8 @@
 
 .fundo{
     /* background: url('../bg-1.jpg'); */
-    background: url('../fundo2.jpg');
+    background-color: #F5F5F5;
+    
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -42,27 +43,10 @@
     z-index:1;
 }
 
-.fundo-video{
-    background: rgba(0,0,0,.6);
-    /* height: 700px; */
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    z-index:1;
-}
-
-@media screen and (max-width: 724px) {
-    .fundo-video{
-        /* height:300px; */
-    }
-    .bg_video{
-        margin-top: 80px;
-    }
-}
 
 .fundo2{
-    background: url('../bg-2.jpg');
+    background-color: #141722 ; 
+    opacity: 0.8;
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -72,13 +56,8 @@
 
 .green-screen{
     z-index:-1;
-    background: rgba(61, 74, 58, .7);    
 }
 
-.info-screen{
-    z-index:-1;
-    background: rgba(247, 241, 243, .8);    
-}
 
 
 
@@ -210,12 +189,13 @@ span.navbar-brand:hover{
     color:#fff;
     font-size: 18px;
     font-weight: 400;
-    border: 2px solid #fff;
+    
 }
 
 
 #contact::placeholder{
-    color:#ccc !important;
+    color:black !important;
+    opacity: 0.7 !important;
 }
 
 .underline-white{
@@ -283,7 +263,12 @@ span.navbar-brand:hover{
 .text-modal-detail{
     font-family: 'Cabin', sans-serif;
     font-weight: 700;
-    color:#4c5870;
+    color: #141722;
+}
+.text-modal-detail-white{
+    font-family: 'Cabin', sans-serif;
+    font-weight: 700;
+    color: white;
 }
 
 .text-size-modal{
