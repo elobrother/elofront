@@ -11,7 +11,7 @@
                       A ELOBROTHER não possui qualquer vínculo ou associação com a Riot Games e seu site, seus produtos e afins.
                     </p>
                     <p>
-                      Somos uma organização 100% independente, ao licar em concordar você automaticamente concordará que está ciente desta informação.
+                      Somos uma organização 100% independente, ao clicar em concordar você automaticamente concordará que está ciente desta informação.
                     </p>
               </div>
               <div class="modal-footer">
