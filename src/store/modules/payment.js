@@ -261,7 +261,8 @@ const payment={
             commit('playerPasswordMutation', null)
         },
         async getAllPayments({commit}, payload) {
-            const token=localStorage.getItem('token')
+            const token=localStorage.getItem('token');
+            console.log(payload);
             let id=''
             await Vue.http.post('api/payments/',{...payload},{headers:{Authorization: token}})
             .then(response=>{
