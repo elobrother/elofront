@@ -41,14 +41,6 @@
                 <div v-if="orders.length==0">
                     <p class="text-center mt-3">Esse código não existe</p>
                 </div>
-                <!-- <div>
-                    <button class="btn btn-primary" @click="more()"></button>
-                </div>  -->
-                <!-- <div class="d-flex justify-content-center">
-                    <div v-if="load" class="spinner-border text-success" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -75,9 +67,12 @@ export default {
     },
     computed:{
         orders(){
-            this.load=false
-            this.total=this.$store.getters['getOrders']
+            this.load=false;
+            this.total=this.$store.getters['getOrders'];
             return this.$store.getters['getOrders']
+        },
+        payments(){
+            return this.$store.getters['getAllPayments'];
         }
     },
     methods: {

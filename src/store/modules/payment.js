@@ -18,6 +18,7 @@ const payment={
         order_admin:{},
         orders_admin:{},
         orders_admin_copy:{},
+        payments: {},
         games:{},
         games_copy:{},
         products:{},
@@ -39,6 +40,9 @@ const payment={
     getters:{
         getAccess(state){
             return state.payment
+        },
+        getPayments(state) {
+            return state.payments;
         },
         getProduct(state){
             return state.formData
@@ -109,6 +113,9 @@ const payment={
     mutations:{
         accessMutation(state,data){
             state.payment=data
+        },
+        paymentsMutation(state, data) {
+            state.payments = data;
         },
         confirmOrderMutation(state,data){
             state.formData.tipo=data.tipo
@@ -252,6 +259,15 @@ const payment={
         //payment
         resetPassword({commit}) {
             commit('playerPasswordMutation', null)
+        },
+        async getAllPayments({commit}, payload) {
+            const token=localStorage.getItem('token')
+            let id=''
+            await Vue.http.post('api/payments/',{...payload},{headers:{Authorization: token}})
+            .then(response=>{
+                commit('paymentsMutation', response.body);         
+            }).catch()  
+   
         },
         async callPaypal({commit},payload){
             const token=localStorage.getItem('token')
